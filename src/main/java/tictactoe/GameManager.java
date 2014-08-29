@@ -8,13 +8,15 @@ public class GameManager
     private final Checker blockChecker;
     private final Checker forkChecker;
     private final Checker blockOpponentForkChecker;
+    private final Checker oppositeCornerChecker;
 
-    public GameManager(Checker winnerChecker, Checker blockChecker, Checker forkChecker, Checker blockOpponentForkChecker)
+    public GameManager(Checker winnerChecker, Checker blockChecker, Checker forkChecker, Checker blockOpponentForkChecker, Checker oppositeCornerChecker)
     {
         this.winnerChecker = winnerChecker;
         this.blockChecker = blockChecker;
         this.forkChecker = forkChecker;
         this.blockOpponentForkChecker = blockOpponentForkChecker;
+        this.oppositeCornerChecker = oppositeCornerChecker;
     }
 
     public Position nextMove(Board board)
@@ -43,7 +45,23 @@ public class GameManager
             return blockOpponentForkCheckResult.getNextMove();
         }
 
+        if (!board.isPositionOccupied(Position.CENTRE))
+        {
+            return Position.CENTRE;
+        }
 
-        return Position.CENTRE;
+        Result oppositeCornerResult = oppositeCornerChecker.check(board, Seed.COMPUTER);
+        if(oppositeCornerResult.hasBeenDetermined())
+        {
+            return oppositeCornerResult.getNextMove();
+        }
+
+        Position emptyCorner = board.findEmptyCorner();
+        if(emptyCorner != null)
+        {
+            return emptyCorner;
+        }
+
+        return board.findEmptySide();
     }
 }
