@@ -5,9 +5,8 @@ import tictactoe.Board;
 import tictactoe.Result;
 import tictactoe.Seed;
 
-public class BlockChecker implements Checker
+public class ForkChecker implements Checker
 {
-    @Override
     public Result check(Board board, Seed seed)
     {
         throw new NotImplementedException();

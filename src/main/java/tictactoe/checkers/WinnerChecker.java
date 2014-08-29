@@ -5,9 +5,10 @@ import tictactoe.Board;
 import tictactoe.Result;
 import tictactoe.Seed;
 
-public class WinnerChecker
+public class WinnerChecker implements Checker
 {
-    public Result canPlayerWin(Board board, Seed seed)
+    @Override
+    public Result check(Board board, Seed seed)
     {
         throw new NotImplementedException();
     }

@@ -8,8 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import tictactoe.checkers.BlockChecker;
-import tictactoe.checkers.WinnerChecker;
+import tictactoe.checkers.Checker;
 
 public class GameManagerTest
 {
@@ -20,65 +19,88 @@ public class GameManagerTest
         }};
 
     private GameManager gameManager;
-    private WinnerChecker winnerChecker;
-    private BlockChecker blockChecker;
+    private Checker winnerChecker;
+    private Checker blockChecker;
+    private Checker forkChecker;
+    private Checker blockOpponentForkChecker;
+    private Board board = new BoardBuilder().build();
 
     @Before
     public void setUp() throws Exception
     {
-        winnerChecker = mockery.mock(WinnerChecker.class);
-        blockChecker = mockery.mock(BlockChecker.class);
-        gameManager = new GameManager(winnerChecker, blockChecker);
+        winnerChecker = mockery.mock(Checker.class, "winnerChecker");
+        blockChecker = mockery.mock(Checker.class, "blockChecker");
+        forkChecker = mockery.mock(Checker.class, "forkChecker");
+        blockOpponentForkChecker = mockery.mock(Checker.class, "blockOpponentForkChecker");
+        gameManager = new GameManager(winnerChecker, blockChecker, forkChecker, blockOpponentForkChecker);
     }
 
     @Test
     public void shouldReturnCentreWhenBoardIsEmpty() throws Exception
     {
-        Board board = Board.newBoard();
-        configureWinnerChecker(board, false);
-        configureBlockChecker(board, false);
+        configureChecker(winnerChecker, board, false);
+        configureChecker(blockChecker, board, false);
+        configureChecker(forkChecker, board, false);
+        configureChecker(blockOpponentForkChecker, board, false);
 
-        Position nextMove = gameManager.nextMove(board);
-        Assert.assertThat(nextMove, Matchers.is(Position.CENTRE));
+        Assert.assertThat(gameManager.nextMove(board), Matchers.is(Position.CENTRE));
     }
 
     @Test
     public void shouldTryToWinGameWhenItCan() throws Exception
     {
-        Board board = new BoardBuilder()
-                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
-                .withMove(Position.TOP_CENTRE, Seed.COMPUTER)
-                .build();
+        configureChecker(winnerChecker, board, true, Position.TOP_LEFT);
 
-        configureWinnerChecker(board, true);
-
-        Position nextMove = gameManager.nextMove(board);
-        Assert.assertThat(nextMove, Matchers.is(Position.TOP_LEFT));
+        Assert.assertThat(gameManager.nextMove(board), Matchers.is(Position.TOP_LEFT));
     }
 
     @Test
     public void shouldBlockOpponentIfCannotWin() throws Exception
     {
-        Board board = new BoardBuilder().build();
-
-        configureWinnerChecker(board, false);
         Position simulatedNextMove = Position.BOTTOM_RIGHT;
-        configureBlockChecker(board, true, simulatedNextMove);
 
-        Position nextMove = gameManager.nextMove(board);
-        Assert.assertThat(nextMove, Matchers.is(simulatedNextMove));
+        configureChecker(winnerChecker, board, false);
+        configureChecker(blockChecker, board, true, simulatedNextMove);
+
+        Assert.assertThat(gameManager.nextMove(board), Matchers.is(simulatedNextMove));
     }
 
-    private void configureBlockChecker(Board board, boolean result)
+    @Test
+    public void shouldForkIfPossibleGivenNoBlockRequiredAndCannotWin() throws Exception
     {
-        configureBlockChecker(board, result, Position.BOTTOM_CENTRE);
+        Position simulatedPosition = Position.BOTTOM_CENTRE;
+
+        configureChecker(winnerChecker, board, false);
+        configureChecker(blockChecker, board, false);
+        configureChecker(forkChecker, board, true, simulatedPosition);
+
+        Assert.assertThat(gameManager.nextMove(board), Matchers.is(simulatedPosition));
     }
 
-    private void configureBlockChecker(Board board, boolean result, final Position position)
+    @Test
+    public void shouldBlockPotentialForkFromOpponentIfForkIsNotPossible() throws Exception
+    {
+        Position simulatedPosition = Position.BOTTOM_CENTRE;
+
+        configureChecker(winnerChecker, board, false);
+        configureChecker(blockChecker, board, false);
+        configureChecker(forkChecker, board, false);
+        configureChecker(blockOpponentForkChecker, board, true, simulatedPosition);
+
+        Assert.assertThat(gameManager.nextMove(board), Matchers.is(simulatedPosition));
+    }
+
+    private void configureChecker(Checker checker, Board board, boolean result)
+    {
+        configureChecker(checker, board, result, Position.CENTRE);
+    }
+
+    private void configureChecker(Checker checker, Board board, boolean result, Position position)
     {
         mockery.checking(new Expectations()
         {{
-                oneOf(blockChecker).mustBlock(board, Seed.COMPUTER);
+                oneOf(checker).check(board, Seed.COMPUTER);
+
                 if (result)
                 {
                     will(returnValue(new Result(position)));
@@ -90,19 +112,4 @@ public class GameManagerTest
             }});
     }
 
-    private void configureWinnerChecker(Board board, boolean result)
-    {
-        mockery.checking(new Expectations()
-        {{
-                oneOf(winnerChecker).canPlayerWin(board, Seed.COMPUTER);
-                if (result)
-                {
-                    will(returnValue(new Result(Position.TOP_LEFT)));
-                }
-                else
-                {
-                    will(returnValue(Result.indeterminateResult()));
-                }
-            }});
-    }
 }
