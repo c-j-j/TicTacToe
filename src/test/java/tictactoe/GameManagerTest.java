@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import tictactoe.checkers.BlockChecker;
+import tictactoe.checkers.WinnerChecker;
 
 public class GameManagerTest
 {
@@ -19,12 +21,14 @@ public class GameManagerTest
 
     private GameManager gameManager;
     private WinnerChecker winnerChecker;
+    private BlockChecker blockChecker;
 
     @Before
     public void setUp() throws Exception
     {
         winnerChecker = mockery.mock(WinnerChecker.class);
-        gameManager = new GameManager(winnerChecker);
+        blockChecker = mockery.mock(BlockChecker.class);
+        gameManager = new GameManager(winnerChecker, blockChecker);
     }
 
     @Test
@@ -32,7 +36,7 @@ public class GameManagerTest
     {
         Board board = Board.newBoard();
         configureWinnerChecker(board, false);
-
+        configureBlockChecker(board, false);
 
         Position nextMove = gameManager.nextMove(board);
         Assert.assertThat(nextMove, Matchers.is(Position.CENTRE));
@@ -50,6 +54,40 @@ public class GameManagerTest
 
         Position nextMove = gameManager.nextMove(board);
         Assert.assertThat(nextMove, Matchers.is(Position.TOP_LEFT));
+    }
+
+    @Test
+    public void shouldBlockOpponentIfCannotWin() throws Exception
+    {
+        Board board = new BoardBuilder().build();
+
+        configureWinnerChecker(board, false);
+        Position simulatedNextMove = Position.BOTTOM_RIGHT;
+        configureBlockChecker(board, true, simulatedNextMove);
+
+        Position nextMove = gameManager.nextMove(board);
+        Assert.assertThat(nextMove, Matchers.is(simulatedNextMove));
+    }
+
+    private void configureBlockChecker(Board board, boolean result)
+    {
+        configureBlockChecker(board, result, Position.BOTTOM_CENTRE);
+    }
+
+    private void configureBlockChecker(Board board, boolean result, final Position position)
+    {
+        mockery.checking(new Expectations()
+        {{
+                oneOf(blockChecker).mustBlock(board, Seed.COMPUTER);
+                if (result)
+                {
+                    will(returnValue(new Result(position)));
+                }
+                else
+                {
+                    will(returnValue(Result.indeterminateResult()));
+                }
+            }});
     }
 
     private void configureWinnerChecker(Board board, boolean result)
