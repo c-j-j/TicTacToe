@@ -1,4 +1,8 @@
-package tictactoe;
+package tictactoe.builders;
+
+import tictactoe.Board;
+import tictactoe.Position;
+import tictactoe.Seed;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,5 +38,10 @@ public class BoardBuilder
     public Board build()
     {
         return new Board(moves);
+    }
+
+    public BoardBuilder withBoard(Board board) {
+        moves = new HashMap<>(board.getMoves());
+        return this;
     }
 }

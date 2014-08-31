@@ -8,6 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import tictactoe.builders.BoardBuilder;
 import tictactoe.checkers.Checker;
 
 public class GameManagerTest

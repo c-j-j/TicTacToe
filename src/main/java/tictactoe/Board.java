@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 public class Board {
     public static final int POTENTIAL_WIN = 2;
     private final Map<Position, Seed> moves;
+
     public static final List<Position> CORNERS = new ArrayList<Position>() {
         {
             add(Position.TOP_RIGHT);
@@ -96,7 +97,11 @@ public class Board {
         return winningLine.getPositions()
                 .stream()
                 .filter(
-                position -> moves.get(position) == Seed.EMPTY).findFirst();
+                        position -> moves.get(position) == Seed.EMPTY).findFirst();
+    }
+
+    public List<Position> getEmptyPositions() {
+        return moves.keySet().stream().filter(p -> moves.get(p) == Seed.EMPTY).collect(Collectors.toList());
     }
 
     private Set<WinningLine> getPotentialWinningLinesForAllPositions(List<Position> positions) {
@@ -117,5 +122,9 @@ public class Board {
                 .stream()
                 .filter(position -> moves.get(position) == seed)
                 .collect(Collectors.toList());
+    }
+
+    public Map<Position, Seed> getMoves() {
+        return Collections.unmodifiableMap(moves);
     }
 }

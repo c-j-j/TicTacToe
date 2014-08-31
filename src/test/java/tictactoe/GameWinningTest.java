@@ -3,6 +3,7 @@ package tictactoe;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
+import tictactoe.builders.BoardBuilder;
 
 public class GameWinningTest {
 
