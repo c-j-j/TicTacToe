@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 
+import java.util.List;
+
 public class GameWinningTest {
 
     @Test
@@ -16,7 +18,7 @@ public class GameWinningTest {
         Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
     }
 
-    //X X e
+    //X X n
     //e e e
     //e e e
     @Test
@@ -33,7 +35,7 @@ public class GameWinningTest {
     }
 
     //X e e
-    //e e e
+    //e n e
     //e e X
     @Test
     public void shouldWinGameWhenTopLeftAndBottomRightOccupied() {
@@ -49,7 +51,7 @@ public class GameWinningTest {
     }
 
     //X e e
-    //e e e
+    //n e e
     //X e e
     @Test
     public void shouldWinGameWhenTopLeftAndBottomLeftOccupied() {
@@ -66,7 +68,7 @@ public class GameWinningTest {
 
     //e X e
     //e X e
-    //e e e
+    //e n e
     @Test
     public void shouldWinGameWhenTopMiddleAndCentreOccupied() {
         Board boardWithPotentialWin = new BoardBuilder()
@@ -82,7 +84,7 @@ public class GameWinningTest {
 
     //e e X
     //e X e
-    //e e e
+    //n e e
     @Test
     public void shouldWinGameWhenTopRightAndCentreOccupied() {
         Board boardWithPotentialWin = new BoardBuilder()
@@ -98,7 +100,7 @@ public class GameWinningTest {
 
     //e e X
     //e e X
-    //e e e
+    //e e n
     @Test
     public void shouldWinGameWhenTopRightAndMiddleRightOccupied() {
         Board boardWithPotentialWin = new BoardBuilder()
@@ -113,7 +115,7 @@ public class GameWinningTest {
     }
 
     //e e e
-    //X e X
+    //X n X
     //e e e
     @Test
     public void shouldWinGameWhenMiddleLeftAndMiddleRightOccupied() {
@@ -130,7 +132,7 @@ public class GameWinningTest {
 
     //e e e
     //e e e
-    //X X e
+    //X X n
     @Test
     public void shouldWinGameWhenBottomLeftAndBottomCentreOccupied() {
         Board boardWithPotentialWin = new BoardBuilder()
@@ -173,5 +175,24 @@ public class GameWinningTest {
         Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
         Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+    }
+
+    //X n X
+    //X e e
+    //n e e
+    @Test
+    public void shouldProvideMultipleWaysToWin() {
+        Board boardWithPotentialWin = new BoardBuilder()
+                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
+                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .withMove(Position.MIDDLE_LEFT, Seed.COMPUTER)
+                .build();
+
+        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
+
+        List<Position> positions = result.getNextMoves();
+
+        Assert.assertThat(positions, Matchers.containsInAnyOrder(Position.TOP_CENTRE,Position.BOTTOM_LEFT));
     }
 }

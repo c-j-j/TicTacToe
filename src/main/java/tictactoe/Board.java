@@ -66,6 +66,8 @@ public class Board {
     public Result canSeedWin(Seed seed) {
         Set<WinningLine> winningLinesForPosition = getPotentialWinningLinesForAllPositions(getPositionsForSeed(seed));
 
+        List<Position> winningPositions = new ArrayList<>();
+
         for (WinningLine winningLine : winningLinesForPosition) {
 
             int count = countSeedOnWinningLine(winningLine, seed);
@@ -74,11 +76,15 @@ public class Board {
                 Optional<Position> emptyPosition = doesEmptyExistOnLine(winningLine);
 
                 if (emptyPosition.isPresent()) {
-                    return new Result(emptyPosition.get());
+                    winningPositions.add(emptyPosition.get());
                 }
             }
         }
-        return Result.indeterminateResult();
+        if (winningPositions.size() > 0) {
+            return new Result(winningPositions);
+        } else {
+            return Result.indeterminateResult();
+        }
     }
 
     private int countSeedOnWinningLine(WinningLine winningLine, Seed seed) {
@@ -126,5 +132,9 @@ public class Board {
 
     public Map<Position, Seed> getMoves() {
         return Collections.unmodifiableMap(moves);
+    }
+
+    public Seed getSeed(Position position) {
+        return moves.get(position);
     }
 }

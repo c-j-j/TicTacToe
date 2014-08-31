@@ -1,27 +1,34 @@
 package tictactoe;
 
-public class Result
-{
-    private final Position nextMove;
+import com.google.common.collect.Lists;
 
-    public Result(Position nextMove)
-    {
-        this.nextMove = nextMove;
+import java.util.Collections;
+import java.util.List;
+
+public class Result {
+    private final List<Position> nextMoves;
+
+    public Result(List<Position> nextMoves) {
+        this.nextMoves = nextMoves;
     }
 
-    public static Result indeterminateResult()
-    {
-        return new Result(null);
+    public Result(Position position) {
+        this(Lists.newArrayList(position));
     }
 
-    public boolean hasBeenDetermined()
-    {
-        return nextMove != null;
-
+    public static Result indeterminateResult() {
+        return new Result(Collections.emptyList());
     }
 
-    public Position getNextMove()
-    {
-        return nextMove;
+    public boolean hasBeenDetermined() {
+        return nextMoves.size() > 0;
+    }
+
+    public Position getNextMove() {
+        return nextMoves.get(0);
+    }
+
+    public List<Position> getNextMoves() {
+        return nextMoves;
     }
 }
