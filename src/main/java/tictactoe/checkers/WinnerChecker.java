@@ -8,8 +8,7 @@ import tictactoe.Seed;
 public class WinnerChecker implements Checker
 {
     @Override
-    public Result check(Board board, Seed seed)
-    {
+    public Result check(Board board, Seed seed) {
         throw new NotImplementedException();
     }
 }

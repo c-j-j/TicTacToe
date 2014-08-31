@@ -7,6 +7,13 @@
     <groupId>CJordan</groupId>
     <artifactId>TicTacToe</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+
+            <!-- maven-compiler-plugin , aka JAVA Compiler 1.7 -->
+            <maven.compiler.target>1.8</maven.compiler.target>
+            <maven.compiler.source>1.8</maven.compiler.source>
+
+    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -56,6 +63,13 @@
             <artifactId>jmock-legacy</artifactId>
             <version>2.6.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>17.0</version>
+        </dependency>
+
     </dependencies>
 
 

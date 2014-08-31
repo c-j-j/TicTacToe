@@ -156,7 +156,7 @@ public class GameManagerTest
         configureChecker(checker, board, result, Position.CENTRE);
     }
 
-    private void configureChecker(Checker checker, Board board, boolean result, Position position)
+    private void configureChecker(final Checker checker, final Board board, final boolean result, final Position position)
     {
         mockery.checking(new Expectations()
         {{
