@@ -1,4 +1,4 @@
-package tictactoe.checkers;
+package tictactoe.utils;
 
 import tictactoe.Position;
 

@@ -19,10 +19,10 @@ public class ForkChecker implements Checker {
         for (Position emptyPosition : board.getEmptyPositions()) {
             Board boardWithAdditionalMove = new BoardBuilder()
                     .withBoard(board)
-                    .withMove(emptyPosition, Seed.COMPUTER)
+                    .withMove(emptyPosition, seed)
                     .build();
 
-            Result result = boardWithAdditionalMove.canSeedWin(Seed.COMPUTER);
+            Result result = boardWithAdditionalMove.canSeedWin(seed);
 
             if (result.getNextMoves().size() >= MIN_REQUIRED_FOR_FORK) {
                 forkingPositions.add(emptyPosition);
