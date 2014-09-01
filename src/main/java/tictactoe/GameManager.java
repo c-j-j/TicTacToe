@@ -1,6 +1,9 @@
 package tictactoe;
 
 import tictactoe.builders.BoardBuilder;
+import tictactoe.checkers.BlockForkChecker;
+import tictactoe.checkers.ForkChecker;
+import tictactoe.checkers.OpponentInCornerChecker;
 import tictactoe.data.Board;
 import tictactoe.data.GameResult;
 import tictactoe.data.GameState;
@@ -16,6 +19,16 @@ public class GameManager
     {
         this.gameStateManager = gameStateManager;
         this.nextPositionHandler = nextPositionHandler;
+    }
+
+    public static GameManager newGameManager()
+    {
+        return new GameManager(new GameStateManager(), new NextPositionHandler(new ForkChecker(), new BlockForkChecker(), new OpponentInCornerChecker()));
+    }
+
+    public GameResult play()
+    {
+        return play(new BoardBuilder().build());
     }
 
     public GameResult play(Board board)

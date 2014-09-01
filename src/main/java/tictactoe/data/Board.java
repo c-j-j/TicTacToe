@@ -155,7 +155,7 @@ public class Board
         return winningLines;
     }
 
-    private List<Position> getPositionsForSeed(Seed seed)
+    public List<Position> getPositionsForSeed(Seed seed)
     {
         return moves.keySet()
                 .stream()

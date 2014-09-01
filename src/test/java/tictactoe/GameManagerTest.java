@@ -67,11 +67,23 @@ public class GameManagerTest
         Assert.assertThat(gameResult.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
     }
 
+    @Test
+    public void computerShouldHaveFirstGoIfNoBoardPassedIn() throws Exception
+    {
+        configureGameStateManager(GameState.IN_PROGRESS, 2);
+        final Position nextPosition = Position.CENTRE;
+        configureNextPositionHandler(nextPosition);
+
+        GameResult gameResult = gameManager.play();
+        Assert.assertThat(gameResult.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
+        Assert.assertThat(gameResult.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+    }
+
     private void configureNextPositionHandler(final Position nextPosition)
     {
         mockery.checking(new Expectations()
         {{
-                oneOf(nextPositionHandler).nextMove(board);
+                oneOf(nextPositionHandler).nextMove(with(any(Board.class)));
                 will(returnValue(nextPosition));
             }});
     }
