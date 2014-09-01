@@ -153,11 +153,11 @@ public class NextPositionHandlerTest
 
                 if (result)
                 {
-                    will(returnValue(new Result(position)));
+                    will(returnValue(new NextMoveResult(position)));
                 }
                 else
                 {
-                    will(returnValue(Result.indeterminateResult()));
+                    will(returnValue(NextMoveResult.indeterminateResult()));
                 }
             }});
     }

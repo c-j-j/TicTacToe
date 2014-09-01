@@ -1,8 +1,8 @@
 package tictactoe.checkers;
 
 import tictactoe.Board;
+import tictactoe.NextMoveResult;
 import tictactoe.Position;
-import tictactoe.Result;
 import tictactoe.Seed;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.utils.SeedUtils;
@@ -13,14 +13,14 @@ import java.util.List;
 public class BlockForkChecker implements Checker
 {
     @Override
-    public Result check(Board board, Seed seed)
+    public NextMoveResult check(Board board, Seed seed)
     {
-        Result result = new ForkChecker().check(board, SeedUtils.getOtherPlayer(seed));
+        NextMoveResult nextMoveResult = new ForkChecker().check(board, SeedUtils.getOtherPlayer(seed));
 
-        List<Position> possibleForkingPositions = result.getNextMoves();
+        List<Position> possibleForkingPositions = nextMoveResult.getNextMoves();
         if (possibleForkingPositions.size() == 1)
         {
-            return new Result(possibleForkingPositions.get(0));
+            return new NextMoveResult(possibleForkingPositions.get(0));
         }
         else if (possibleForkingPositions.size() > 1)
         {
@@ -28,11 +28,11 @@ public class BlockForkChecker implements Checker
         }
         else
         {
-            return Result.indeterminateResult();
+            return NextMoveResult.indeterminateResult();
         }
     }
 
-    private Result forceOtherPlayerToGoInNonForkingPosition(List<Position> forkingPositions, Board board)
+    private NextMoveResult forceOtherPlayerToGoInNonForkingPosition(List<Position> forkingPositions, Board board)
     {
         List<Position> potentialNewPositions = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class BlockForkChecker implements Checker
             }
 
         }
-        return new Result(potentialNewPositions);
+        return new NextMoveResult(potentialNewPositions);
     }
 
     private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Position emptyPosition, Board boardWithAdditionalMove)

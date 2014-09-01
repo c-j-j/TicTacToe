@@ -74,4 +74,27 @@ public class BoardQueryTest
 
         Assert.assertThat(board.findEmptySide(), Matchers.nullValue());
     }
+
+    @Test
+    public void shouldReturnTrueIfSeedHasWon() throws Exception
+    {
+        Board board = new BoardBuilder()
+                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
+                .withMove(Position.TOP_CENTRE, Seed.COMPUTER)
+                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .build();
+
+        Assert.assertThat(board.hasSeedWon(Seed.COMPUTER), Matchers.is(true));
+    }
+
+    @Test
+    public void shouldReturnFalseIfSeedHasNotWon() throws Exception
+    {
+        Board board = new BoardBuilder()
+                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
+                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .build();
+
+        Assert.assertThat(board.hasSeedWon(Seed.COMPUTER), Matchers.is(false));
+    }
 }

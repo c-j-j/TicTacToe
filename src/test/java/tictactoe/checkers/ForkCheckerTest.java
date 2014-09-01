@@ -4,8 +4,8 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.Board;
+import tictactoe.NextMoveResult;
 import tictactoe.Position;
-import tictactoe.Result;
 import tictactoe.Seed;
 import tictactoe.builders.BoardBuilder;
 
@@ -16,9 +16,9 @@ public class ForkCheckerTest {
         Board emptyBoard = new BoardBuilder()
                 .build();
 
-        Result forkResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
+        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
 
-        Assert.assertThat(forkResult.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(forkNextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     //X E n
@@ -34,10 +34,10 @@ public class ForkCheckerTest {
                 .build();
 
 
-        Result forkResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
+        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
 
-        Assert.assertThat(forkResult.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(forkResult.getNextMoves(), Matchers.containsInAnyOrder(Position.CENTRE, Position.TOP_RIGHT, Position.BOTTOM_RIGHT));
+        Assert.assertThat(forkNextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(forkNextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.CENTRE, Position.TOP_RIGHT, Position.BOTTOM_RIGHT));
     }
 
 }

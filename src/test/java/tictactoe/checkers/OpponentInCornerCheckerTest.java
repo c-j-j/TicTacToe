@@ -4,8 +4,8 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.Board;
+import tictactoe.NextMoveResult;
 import tictactoe.Position;
-import tictactoe.Result;
 import tictactoe.Seed;
 import tictactoe.builders.BoardBuilder;
 
@@ -21,9 +21,9 @@ public class OpponentInCornerCheckerTest
                 .withMove(Position.BOTTOM_RIGHT, Seed.OPPONENT)
                 .build();
 
-        Result result = new OpponentInCornerChecker().check(boardWithOccupiedCorners, Seed.COMPUTER);
+        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWithOccupiedCorners, Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     @Test
@@ -56,9 +56,9 @@ public class OpponentInCornerCheckerTest
                 .withMove(opponentPosition, Seed.OPPONENT)
                 .build();
 
-        Result result = new OpponentInCornerChecker().check(boardWhereOpponentHasCorner, Seed.COMPUTER);
+        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWhereOpponentHasCorner, Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(expectedNextPositionFromPlayer));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(expectedNextPositionFromPlayer));
     }
 }

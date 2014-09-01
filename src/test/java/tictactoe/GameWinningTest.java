@@ -13,9 +13,9 @@ public class GameWinningTest {
     public void shouldNotWinGameWhenNotPossible() {
         Board emptyBoard = new BoardBuilder().build();
 
-        Result result = emptyBoard.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = emptyBoard.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     //X X n
@@ -28,10 +28,10 @@ public class GameWinningTest {
                 .withMove(Position.TOP_CENTRE, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.TOP_RIGHT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.TOP_RIGHT));
     }
 
     //X e e
@@ -44,10 +44,10 @@ public class GameWinningTest {
                 .withMove(Position.BOTTOM_RIGHT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.CENTRE));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.CENTRE));
     }
 
     //X e e
@@ -60,10 +60,10 @@ public class GameWinningTest {
                 .withMove(Position.BOTTOM_LEFT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.MIDDLE_LEFT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.MIDDLE_LEFT));
     }
 
     //e X e
@@ -76,10 +76,10 @@ public class GameWinningTest {
                 .withMove(Position.CENTRE, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.BOTTOM_CENTRE));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_CENTRE));
     }
 
     //e e X
@@ -92,10 +92,10 @@ public class GameWinningTest {
                 .withMove(Position.CENTRE, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.BOTTOM_LEFT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_LEFT));
     }
 
     //e e X
@@ -108,10 +108,10 @@ public class GameWinningTest {
                 .withMove(Position.MIDDLE_RIGHT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
     }
 
     //e e e
@@ -124,10 +124,10 @@ public class GameWinningTest {
                 .withMove(Position.MIDDLE_RIGHT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.CENTRE));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.CENTRE));
     }
 
     //e e e
@@ -140,10 +140,10 @@ public class GameWinningTest {
                 .withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
     }
 
     //X e e
@@ -156,9 +156,9 @@ public class GameWinningTest {
                 .withMove(Position.MIDDLE_RIGHT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     //X O X
@@ -172,9 +172,9 @@ public class GameWinningTest {
                 .withMove(Position.TOP_CENTRE, Seed.OPPONENT)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     //X n X
@@ -188,10 +188,10 @@ public class GameWinningTest {
                 .withMove(Position.MIDDLE_LEFT, Seed.COMPUTER)
                 .build();
 
-        Result result = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
+        NextMoveResult nextMoveResult = boardWithPotentialWin.canSeedWin(Seed.COMPUTER);
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
 
-        List<Position> positions = result.getNextMoves();
+        List<Position> positions = nextMoveResult.getNextMoves();
 
         Assert.assertThat(positions, Matchers.containsInAnyOrder(Position.TOP_CENTRE,Position.BOTTOM_LEFT));
     }

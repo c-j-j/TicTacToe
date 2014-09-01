@@ -5,19 +5,20 @@ import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.List;
 
-public class Result {
+public class NextMoveResult
+{
     private final List<Position> nextMoves;
 
-    public Result(List<Position> nextMoves) {
+    public NextMoveResult(List<Position> nextMoves) {
         this.nextMoves = nextMoves;
     }
 
-    public Result(Position position) {
+    public NextMoveResult(Position position) {
         this(Lists.newArrayList(position));
     }
 
-    public static Result indeterminateResult() {
-        return new Result(Collections.emptyList());
+    public static NextMoveResult indeterminateResult() {
+        return new NextMoveResult(Collections.emptyList());
     }
 
     public boolean hasBeenDetermined() {

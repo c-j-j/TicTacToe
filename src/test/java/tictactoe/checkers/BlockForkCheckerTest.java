@@ -4,8 +4,8 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.Board;
+import tictactoe.NextMoveResult;
 import tictactoe.Position;
-import tictactoe.Result;
 import tictactoe.Seed;
 import tictactoe.builders.BoardBuilder;
 
@@ -16,10 +16,10 @@ public class BlockForkCheckerTest
     {
         Board emptyBoard = new BoardBuilder().build();
 
-        Result result = new BlockForkChecker()
+        NextMoveResult nextMoveResult = new BlockForkChecker()
                 .check(emptyBoard, Seed.OPPONENT);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(false));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
 
     //O E X
@@ -35,11 +35,11 @@ public class BlockForkCheckerTest
                 .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
                 .build();
 
-        Result result = new BlockForkChecker()
+        NextMoveResult nextMoveResult = new BlockForkChecker()
                 .check(boardWithSinglePotentialFork, Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
     }
 
     //O n E
@@ -54,10 +54,10 @@ public class BlockForkCheckerTest
                 .withMove(Position.CENTRE, Seed.COMPUTER)
                 .build();
 
-        Result result = new BlockForkChecker()
+        NextMoveResult nextMoveResult = new BlockForkChecker()
                 .check(boardWithSinglePotentialFork, Seed.COMPUTER);
 
-        Assert.assertThat(result.hasBeenDetermined(), Matchers.is(true));
-        Assert.assertThat(result.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_CENTRE, Position.MIDDLE_LEFT, Position.BOTTOM_CENTRE, Position.MIDDLE_RIGHT));
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_CENTRE, Position.MIDDLE_LEFT, Position.BOTTOM_CENTRE, Position.MIDDLE_RIGHT));
     }
 }

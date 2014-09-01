@@ -17,28 +17,28 @@ public class NextPositionHandler
 
     public Position nextMove(Board board)
     {
-        Result computerCanWinResult = board.canSeedWin(Seed.COMPUTER);
-        if (computerCanWinResult.hasBeenDetermined())
+        NextMoveResult computerCanWinNextMoveResult = board.canSeedWin(Seed.COMPUTER);
+        if (computerCanWinNextMoveResult.hasBeenDetermined())
         {
-            return computerCanWinResult.getNextMove();
+            return computerCanWinNextMoveResult.getNextMove();
         }
 
-        Result mustBlockResult = board.canSeedWin(Seed.OPPONENT);
-        if (mustBlockResult.hasBeenDetermined())
+        NextMoveResult mustBlockNextMoveResult = board.canSeedWin(Seed.OPPONENT);
+        if (mustBlockNextMoveResult.hasBeenDetermined())
         {
-            return mustBlockResult.getNextMove();
+            return mustBlockNextMoveResult.getNextMove();
         }
 
-        Result canForkResult = forkChecker.check(board, Seed.COMPUTER);
-        if (canForkResult.hasBeenDetermined())
+        NextMoveResult canForkNextMoveResult = forkChecker.check(board, Seed.COMPUTER);
+        if (canForkNextMoveResult.hasBeenDetermined())
         {
-            return canForkResult.getNextMove();
+            return canForkNextMoveResult.getNextMove();
         }
 
-        Result blockOpponentsForkCheckResult = blockOpponentForkChecker.check(board, Seed.COMPUTER);
-        if (blockOpponentsForkCheckResult.hasBeenDetermined())
+        NextMoveResult blockOpponentsForkCheckNextMoveResult = blockOpponentForkChecker.check(board, Seed.COMPUTER);
+        if (blockOpponentsForkCheckNextMoveResult.hasBeenDetermined())
         {
-            return blockOpponentsForkCheckResult.getNextMove();
+            return blockOpponentsForkCheckNextMoveResult.getNextMove();
         }
 
         if (!board.isPositionOccupied(Position.CENTRE))
@@ -46,10 +46,10 @@ public class NextPositionHandler
             return Position.CENTRE;
         }
 
-        Result oppositeCornerResult = opponentInOrderChecker.check(board, Seed.COMPUTER);
-        if (oppositeCornerResult.hasBeenDetermined())
+        NextMoveResult oppositeCornerNextMoveResult = opponentInOrderChecker.check(board, Seed.COMPUTER);
+        if (oppositeCornerNextMoveResult.hasBeenDetermined())
         {
-            return oppositeCornerResult.getNextMove();
+            return oppositeCornerNextMoveResult.getNextMove();
         }
 
         Position emptyCorner = board.findEmptyCorner();
