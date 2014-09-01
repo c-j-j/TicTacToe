@@ -3,10 +3,10 @@ package tictactoe.checkers;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import tictactoe.Board;
-import tictactoe.NextMoveResult;
-import tictactoe.Position;
-import tictactoe.Seed;
+import tictactoe.data.Board;
+import tictactoe.data.NextMoveResult;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 import tictactoe.builders.BoardBuilder;
 
 public class BlockForkCheckerTest

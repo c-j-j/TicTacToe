@@ -1,8 +1,8 @@
 package tictactoe.builders;
 
-import tictactoe.Board;
-import tictactoe.Position;
-import tictactoe.Seed;
+import tictactoe.data.Board;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 
 import java.util.HashMap;
 import java.util.Map;

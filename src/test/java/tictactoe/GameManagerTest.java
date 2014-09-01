@@ -9,6 +9,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
+import tictactoe.data.Board;
+import tictactoe.data.GameResult;
+import tictactoe.data.GameState;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 
 public class GameManagerTest
 {

@@ -1,5 +1,9 @@
 package tictactoe;
 
+import tictactoe.data.Board;
+import tictactoe.data.GameState;
+import tictactoe.data.Seed;
+
 public class GameStateManager
 {
     public static final int EMPTY_BOARD = 0;

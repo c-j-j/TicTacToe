@@ -3,13 +3,21 @@ package tictactoe;
 import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
+import org.jmock.lib.concurrent.Synchroniser;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
+import tictactoe.checkers.BlockForkChecker;
 import tictactoe.checkers.Checker;
+import tictactoe.checkers.ForkChecker;
+import tictactoe.checkers.OpponentInCornerChecker;
+import tictactoe.data.Board;
+import tictactoe.data.NextMoveResult;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 
 public class NextPositionHandlerTest
 {
@@ -17,20 +25,21 @@ public class NextPositionHandlerTest
     public JUnitRuleMockery mockery = new JUnitRuleMockery()
     {{
             setImposteriser(ClassImposteriser.INSTANCE);
+            setThreadingPolicy(new Synchroniser());
         }};
 
     private NextPositionHandler nextPositionHandler;
-    private Checker forkChecker;
-    private Checker blockOpponentForkChecker;
-    private Checker cornerChecker;
+    private ForkChecker forkChecker;
+    private BlockForkChecker blockOpponentForkChecker;
+    private OpponentInCornerChecker cornerChecker;
     private Board emptyBoard = new BoardBuilder().build();
 
     @Before
     public void setUp() throws Exception
     {
-        forkChecker = mockery.mock(Checker.class, "forkChecker");
-        cornerChecker = mockery.mock(Checker.class, "cornerChecker");
-        blockOpponentForkChecker = mockery.mock(Checker.class, "blockOpponentForkChecker");
+        forkChecker = mockery.mock(ForkChecker.class, "forkChecker");
+        cornerChecker = mockery.mock(OpponentInCornerChecker.class, "cornerChecker");
+        blockOpponentForkChecker = mockery.mock(BlockForkChecker.class, "blockOpponentForkChecker");
         nextPositionHandler = new NextPositionHandler(forkChecker, blockOpponentForkChecker, cornerChecker);
     }
 

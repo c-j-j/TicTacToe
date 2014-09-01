@@ -1,6 +1,6 @@
 package tictactoe.utils;
 
-import tictactoe.Position;
+import tictactoe.data.Position;
 
 import java.util.HashMap;
 import java.util.Map;

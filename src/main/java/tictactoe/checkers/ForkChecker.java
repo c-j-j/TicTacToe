@@ -1,9 +1,9 @@
 package tictactoe.checkers;
 
-import tictactoe.Board;
-import tictactoe.NextMoveResult;
-import tictactoe.Position;
-import tictactoe.Seed;
+import tictactoe.data.Board;
+import tictactoe.data.NextMoveResult;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 import tictactoe.builders.BoardBuilder;
 
 import java.util.ArrayList;

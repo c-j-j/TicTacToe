@@ -1,6 +1,13 @@
 package tictactoe;
 
+import tictactoe.checkers.BlockForkChecker;
 import tictactoe.checkers.Checker;
+import tictactoe.checkers.ForkChecker;
+import tictactoe.checkers.OpponentInCornerChecker;
+import tictactoe.data.Board;
+import tictactoe.data.NextMoveResult;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 
 public class NextPositionHandler
 {
@@ -8,7 +15,7 @@ public class NextPositionHandler
     private final Checker blockOpponentForkChecker;
     private final Checker opponentInOrderChecker;
 
-    public NextPositionHandler(Checker forkChecker, Checker blockOpponentForkChecker, Checker opponentInOrderChecker)
+    public NextPositionHandler(ForkChecker forkChecker, BlockForkChecker blockOpponentForkChecker, OpponentInCornerChecker opponentInOrderChecker)
     {
         this.forkChecker = forkChecker;
         this.blockOpponentForkChecker = blockOpponentForkChecker;

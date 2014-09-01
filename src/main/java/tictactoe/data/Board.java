@@ -1,4 +1,4 @@
-package tictactoe;
+package tictactoe.data;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package tictactoe;
+package tictactoe.data;
 
 import com.google.common.collect.Lists;
 

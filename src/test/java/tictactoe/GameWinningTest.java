@@ -4,6 +4,10 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
+import tictactoe.data.Board;
+import tictactoe.data.NextMoveResult;
+import tictactoe.data.Position;
+import tictactoe.data.Seed;
 
 import java.util.List;
 

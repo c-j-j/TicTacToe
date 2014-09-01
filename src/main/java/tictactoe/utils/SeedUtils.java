@@ -1,6 +1,6 @@
 package tictactoe.utils;
 
-import tictactoe.Seed;
+import tictactoe.data.Seed;
 
 import java.util.HashMap;
 import java.util.Map;
