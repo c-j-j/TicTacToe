@@ -1,6 +1,7 @@
 package tictactoe.checkers;
 
 import tictactoe.data.Board;
+import tictactoe.data.BoardPositions;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
@@ -16,7 +17,7 @@ public class OpponentInCornerChecker implements Checker
     @Override
     public NextMoveResult check(Board board, Seed seed)
     {
-        for (Position corner : Board.CORNERS)
+        for (Position corner : BoardPositions.CORNERS)
         {
             if (board.getSeed(corner) == SeedUtils.getOtherPlayer(seed) && board.getSeed(PositionUtils.getOppositeCorner(corner)) == Seed.EMPTY)
             {

@@ -1,5 +1,7 @@
 package tictactoe.data;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,46 +13,13 @@ import java.util.stream.Collectors;
 
 public class Board
 {
-    public static final int POTENTIAL_WIN = 2;
+
+    @Expose
     private final Map<Position, Seed> moves;
-
-    public static final List<Position> CORNERS = new ArrayList<Position>()
-    {
-        {
-            add(Position.TOP_RIGHT);
-            add(Position.TOP_LEFT);
-            add(Position.BOTTOM_RIGHT);
-            add(Position.BOTTOM_LEFT);
-        }
-    };
-
-    public static final List<Position> SIDES = new ArrayList<Position>()
-    {
-        {
-            add(Position.TOP_CENTRE);
-            add(Position.BOTTOM_CENTRE);
-            add(Position.MIDDLE_LEFT);
-            add(Position.MIDDLE_RIGHT);
-        }
-    };
-
-    public final Set<WinningLine> WINNING_LINES = new HashSet<WinningLine>()
-    {{
-            add(new WinningLine(Position.TOP_LEFT, Position.TOP_CENTRE, Position.TOP_RIGHT));
-            add(new WinningLine(Position.TOP_LEFT, Position.CENTRE, Position.BOTTOM_RIGHT));
-            add(new WinningLine(Position.TOP_LEFT, Position.MIDDLE_LEFT, Position.BOTTOM_LEFT));
-            add(new WinningLine(Position.TOP_CENTRE, Position.CENTRE, Position.BOTTOM_CENTRE));
-            add(new WinningLine(Position.TOP_RIGHT, Position.CENTRE, Position.BOTTOM_LEFT));
-            add(new WinningLine(Position.TOP_RIGHT, Position.MIDDLE_RIGHT, Position.BOTTOM_RIGHT));
-            add(new WinningLine(Position.MIDDLE_LEFT, Position.CENTRE, Position.MIDDLE_RIGHT));
-            add(new WinningLine(Position.BOTTOM_LEFT, Position.BOTTOM_CENTRE, Position.BOTTOM_RIGHT));
-        }};
-
     public Board(Map<Position, Seed> moves)
     {
         this.moves = moves;
     }
-
 
     public boolean isPositionOccupied(Position position)
     {
@@ -59,7 +28,7 @@ public class Board
 
     public Position findEmptyCorner()
     {
-        for (Position corner : CORNERS)
+        for (Position corner : BoardPositions.CORNERS)
         {
             if (moves.get(corner) == Seed.EMPTY)
             {
@@ -71,7 +40,7 @@ public class Board
 
     public Position findEmptySide()
     {
-        for (Position side : SIDES)
+        for (Position side : BoardPositions.SIDES)
         {
             if (moves.get(side) == Seed.EMPTY)
             {
@@ -92,7 +61,7 @@ public class Board
 
             int count = countSeedOnWinningLine(winningLine, seed);
 
-            if (count == POTENTIAL_WIN)
+            if (count == BoardPositions.POTENTIAL_WIN)
             {
                 Optional<Position> emptyPosition = doesEmptyExistOnLine(winningLine);
 
@@ -147,7 +116,7 @@ public class Board
 
         for (Position position : positions)
         {
-            winningLines.addAll(WINNING_LINES
+            winningLines.addAll(BoardPositions.WINNING_LINES
                     .stream()
                     .filter(winningLine -> winningLine.contains(position))
                     .collect(Collectors.toSet()));
@@ -177,7 +146,7 @@ public class Board
     {
         boolean foundWinner = false;
 
-        for (WinningLine winningLine : WINNING_LINES)
+        for (WinningLine winningLine : BoardPositions.WINNING_LINES)
         {
             foundWinner = doesSeedOccupyWinningLine(seed, winningLine);
 
@@ -200,4 +169,5 @@ public class Board
         }
         return true;
     }
+
 }
