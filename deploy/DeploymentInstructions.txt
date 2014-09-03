@@ -1,0 +1,5 @@
+To deploy, ensure JAVA_HOME is set to version 8
+
+java -jar TicTacToe-1.0-SNAPSHOT.jar server config.yml
+
+Open web browser and go to http://127.0.0.1:9000/ .

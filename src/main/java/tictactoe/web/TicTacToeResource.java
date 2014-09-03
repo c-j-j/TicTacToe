@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class TicTacToeResource
 {
-    public static final String ROOT = "api";
+    public static final String ROOT = "ttt";
     public static final String NEW_GAME = "new_game";
     public static final String FIRST_PLAYER = "firstPlayer";
     public static final String NEXT_POSITION = "nextPosition";
