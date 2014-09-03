@@ -1,6 +1,6 @@
 package tictactoe;
 
-import tictactoe.builders.BoardBuilder;
+import tictactoe.builders.BoardFactory;
 import tictactoe.checkers.BlockForkChecker;
 import tictactoe.checkers.ForkChecker;
 import tictactoe.checkers.OpponentInCornerChecker;
@@ -28,7 +28,7 @@ public class GameManager
 
     public GameResult play()
     {
-        return play(new BoardBuilder().build());
+        return play(BoardFactory.emptyBoard());
     }
 
     public GameResult play(Board board)
@@ -39,10 +39,7 @@ public class GameManager
         {
             Position nextMove = nextPositionHandler.nextMove(board);
 
-            Board updatedBoard = new BoardBuilder()
-                    .withBoard(board)
-                    .withMove(nextMove, Seed.COMPUTER)
-                    .build();
+            Board updatedBoard = BoardFactory.addMove(board, nextMove, Seed.COMPUTER);
 
             return new GameResult(gameStateManager.getState(updatedBoard), updatedBoard);
         }

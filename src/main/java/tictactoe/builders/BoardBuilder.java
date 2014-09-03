@@ -40,7 +40,8 @@ public class BoardBuilder
         return new Board(moves);
     }
 
-    public BoardBuilder withBoard(Board board) {
+    public BoardBuilder withBoard(Board board)
+    {
         moves = new HashMap<>(board.getMoves());
         return this;
     }

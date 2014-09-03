@@ -1,10 +1,10 @@
 package tictactoe.checkers;
 
+import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
-import tictactoe.builders.BoardBuilder;
 import tictactoe.utils.SeedUtils;
 
 import java.util.ArrayList;
@@ -38,10 +38,7 @@ public class BlockForkChecker implements Checker
 
         for (Position emptyPosition : board.getEmptyPositions())
         {
-            Board boardWithAdditionalMove = new BoardBuilder()
-                    .withBoard(board)
-                    .withMove(emptyPosition, Seed.COMPUTER)
-                    .build();
+            Board boardWithAdditionalMove = BoardFactory.addMove(board, emptyPosition, Seed.COMPUTER);
 
             if (willForceOpponentToNonForkingPosition(forkingPositions, emptyPosition, boardWithAdditionalMove))
             {

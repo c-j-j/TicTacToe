@@ -7,7 +7,7 @@ import tictactoe.data.Position;
 public class ComputerGoesSecondTest extends IntegrationTestBase
 {
     @Test
-    @Ignore //needs to be idempotent
+    @Ignore //the game is not idempotent. However, although this makes integration tests impossible to automate, it does result in a more nondeterministic tictactoe opponent
     public void shouldBlockForkByAggressivelyTryingToWinWhichWillLeadToDraw() throws Exception
     {
         playerGoes(Position.TOP_LEFT);

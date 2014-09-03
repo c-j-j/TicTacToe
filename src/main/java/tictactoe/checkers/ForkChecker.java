@@ -1,10 +1,10 @@
 package tictactoe.checkers;
 
+import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
-import tictactoe.builders.BoardBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +17,7 @@ public class ForkChecker implements Checker {
         List<Position> forkingPositions = new ArrayList<>();
 
         for (Position emptyPosition : board.getEmptyPositions()) {
-            Board boardWithAdditionalMove = new BoardBuilder()
-                    .withBoard(board)
-                    .withMove(emptyPosition, seed)
-                    .build();
+            Board boardWithAdditionalMove = BoardFactory.addMove(board, emptyPosition, seed);
 
             NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(seed);
 

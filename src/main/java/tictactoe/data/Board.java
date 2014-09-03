@@ -1,5 +1,6 @@
 package tictactoe.data;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
@@ -170,4 +171,13 @@ public class Board
         return true;
     }
 
+    public String toJson()
+    {
+        return new Gson().toJson(this);
+    }
+
+    public static Board inflateFromJson(String json)
+    {
+        return new Gson().fromJson(json, Board.class);
+    }
 }
