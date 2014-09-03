@@ -6,6 +6,7 @@ Technologies used:
 1. Java 8 backend, using Dropwizard to glue Jersey web service/serve static web files.
 2. AngularJS frontend to render the board/allow user to register moves.
 
+The static web files may be located in main/resources/assets.
 
 The algorithm used was based on the following, which is from http://en.wikipedia.org/wiki/Tic-tac-toe;
 
