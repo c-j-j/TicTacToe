@@ -40,7 +40,7 @@ public class BlockForkChecker implements Checker
         {
             Board boardWithAdditionalMove = BoardFactory.addMove(board, emptyPosition, Seed.COMPUTER);
 
-            if (willForceOpponentToNonForkingPosition(forkingPositions, emptyPosition, boardWithAdditionalMove))
+            if (willForceOpponentToNonForkingPosition(forkingPositions, boardWithAdditionalMove))
             {
                 potentialNewPositions.add(emptyPosition);
             }
@@ -49,7 +49,7 @@ public class BlockForkChecker implements Checker
         return new NextMoveResult(potentialNewPositions);
     }
 
-    private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Position emptyPosition, Board boardWithAdditionalMove)
+    private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Board boardWithAdditionalMove)
     {
         NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(Seed.COMPUTER);
         if(nextMoveResult.hasBeenDetermined()){
