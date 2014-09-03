@@ -17,6 +17,21 @@ angular.module('tttApp', ['tttService'])
             }
         }
 
+        function assignMovesToScopeVariables(data) {
+            $scope.GameProgress = data;
+            $scope.moves = $scope.GameProgress.board.moves;
+
+            $scope.TOP_LEFT = $scope.moves[ 'TOP_LEFT'];
+            $scope.TOP_CENTRE = $scope.moves['TOP_CENTRE'];
+            $scope.TOP_RIGHT = $scope.moves['TOP_RIGHT'];
+            $scope.MIDDLE_LEFT = $scope.moves['MIDDLE_LEFT'];
+            $scope.CENTRE = $scope.moves['CENTRE'];
+            $scope.MIDDLE_RIGHT = $scope.moves['MIDDLE_RIGHT'];
+            $scope.BOTTOM_LEFT = $scope.moves['BOTTOM_LEFT'];
+            $scope.BOTTOM_CENTRE = $scope.moves['BOTTOM_CENTRE'];
+            $scope.BOTTOM_RIGHT = $scope.moves['BOTTOM_RIGHT'];
+        }
+
         $scope.init = function (){
             changeNextPlayer();
 
@@ -24,19 +39,7 @@ angular.module('tttApp', ['tttService'])
                 .$promise
                 .then(function (data) {
                     $scope.GameOver = false;
-
-                    $scope.GameProgress = data;
-                    $scope.moves = $scope.GameProgress.board.moves;
-
-                    $scope.TOP_LEFT = $scope.moves[ 'TOP_LEFT'];
-                    $scope.TOP_CENTRE = $scope.moves['TOP_CENTRE'];
-                    $scope.TOP_RIGHT = $scope.moves['TOP_RIGHT'];
-                    $scope.MIDDLE_LEFT = $scope.moves['MIDDLE_LEFT'];
-                    $scope.CENTRE = $scope.moves['CENTRE'];
-                    $scope.MIDDLE_RIGHT = $scope.moves['MIDDLE_RIGHT'];
-                    $scope.BOTTOM_LEFT = $scope.moves['BOTTOM_LEFT'];
-                    $scope.BOTTOM_CENTRE = $scope.moves['BOTTOM_CENTRE'];
-                    $scope.BOTTOM_RIGHT = $scope.moves['BOTTOM_RIGHT'];
+                    assignMovesToScopeVariables(data);
                 })
         };
 
@@ -49,17 +52,7 @@ angular.module('tttApp', ['tttService'])
                     .$promise
                     .then(function (data) {
                         $scope.GameProgress = data;
-                        $scope.moves = $scope.GameProgress.board.moves;
-
-                        $scope.TOP_LEFT = $scope.moves['TOP_LEFT'];
-                        $scope.TOP_CENTRE = $scope.moves['TOP_CENTRE'];
-                        $scope.TOP_RIGHT = $scope.moves['TOP_RIGHT'];
-                        $scope.MIDDLE_LEFT = $scope.moves['MIDDLE_LEFT'];
-                        $scope.CENTRE = $scope.moves['CENTRE'];
-                        $scope.MIDDLE_RIGHT = $scope.moves['MIDDLE_RIGHT'];
-                        $scope.BOTTOM_LEFT = $scope.moves['BOTTOM_LEFT'];
-                        $scope.BOTTOM_CENTRE = $scope.moves['BOTTOM_CENTRE'];
-                        $scope.BOTTOM_RIGHT = $scope.moves['BOTTOM_RIGHT'];
+                        assignMovesToScopeVariables(data);
 
                         if($scope.GameProgress.currentGameState != 'IN_PROGRESS'){
                             $scope.GameOver = true;
