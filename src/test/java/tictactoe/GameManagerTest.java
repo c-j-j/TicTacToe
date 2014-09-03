@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
-import tictactoe.data.GameResult;
+import tictactoe.data.GameProgress;
 import tictactoe.data.GameState;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
@@ -62,21 +62,35 @@ public class GameManagerTest
         final Position nextPosition = Position.CENTRE;
         configureNextPositionHandler(nextPosition);
 
-        GameResult gameResult = gameManager.play(board);
-        Assert.assertThat(gameResult.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
-        Assert.assertThat(gameResult.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+        GameProgress gameProgress = gameManager.play(board);
+        Assert.assertThat(gameProgress.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
+        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
     }
 
     @Test
-    public void computerShouldHaveFirstGoIfNoBoardPassedIn() throws Exception
+    public void computerShouldStartWhenConfiguredToDoSo() throws Exception
     {
         configureGameStateManager(GameState.IN_PROGRESS, 2);
         final Position nextPosition = Position.CENTRE;
         configureNextPositionHandler(nextPosition);
 
-        GameResult gameResult = gameManager.play();
-        Assert.assertThat(gameResult.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
-        Assert.assertThat(gameResult.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+        GameProgress gameProgress = gameManager.start(Seed.COMPUTER);
+        Assert.assertThat(gameProgress.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
+        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+    }
+
+    @Test
+    public void shouldProvideEmptyBoardWhenPlayerIsGoingFirst() throws Exception
+    {
+        GameProgress gameProgress = gameManager.start(Seed.OPPONENT);
+
+        Assert.assertThat(gameProgress.getBoard().getEmptyPositions().size(), Matchers.is(9));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowExceptionWhenEmptySeedIsPassedToGameManager() throws Exception
+    {
+        gameManager.start(Seed.EMPTY);
     }
 
     private void configureNextPositionHandler(final Position nextPosition)
@@ -92,8 +106,8 @@ public class GameManagerTest
     {
         configureGameStateManager(gameState, 1);
 
-        GameResult gameResult = gameManager.play(board);
-        Assert.assertThat(gameResult.getCurrentGameState(), Matchers.is(gameState));
+        GameProgress gameProgress = gameManager.play(board);
+        Assert.assertThat(gameProgress.getCurrentGameState(), Matchers.is(gameState));
     }
 
     private void configureGameStateManager(final GameState gameState, int numberOfInvocations)

@@ -5,7 +5,7 @@ import tictactoe.checkers.BlockForkChecker;
 import tictactoe.checkers.ForkChecker;
 import tictactoe.checkers.OpponentInCornerChecker;
 import tictactoe.data.Board;
-import tictactoe.data.GameResult;
+import tictactoe.data.GameProgress;
 import tictactoe.data.GameState;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
@@ -26,12 +26,20 @@ public class GameManager
         return new GameManager(new GameStateManager(), new NextPositionHandler(new ForkChecker(), new BlockForkChecker(), new OpponentInCornerChecker()));
     }
 
-    public GameResult play()
+    public GameProgress start(Seed seed)
     {
-        return play(BoardFactory.emptyBoard());
+        if(seed == Seed.COMPUTER){
+            return play(BoardFactory.emptyBoard());
+        }else if(seed == Seed.OPPONENT)
+        {
+            return new GameProgress(GameState.IN_PROGRESS, BoardFactory.emptyBoard());
+        }else
+        {
+            throw new IllegalArgumentException("Seed must be COMPUTER/OPPONENT");
+        }
     }
 
-    public GameResult play(Board board)
+    public GameProgress play(Board board)
     {
         GameState currentGameState = gameStateManager.getState(board);
 
@@ -41,11 +49,11 @@ public class GameManager
 
             Board updatedBoard = BoardFactory.addMove(board, nextMove, Seed.COMPUTER);
 
-            return new GameResult(gameStateManager.getState(updatedBoard), updatedBoard);
+            return new GameProgress(gameStateManager.getState(updatedBoard), updatedBoard);
         }
         else
         {
-            return new GameResult(currentGameState, board);
+            return new GameProgress(currentGameState, board);
         }
     }
 }

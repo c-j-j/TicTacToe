@@ -1,7 +1,6 @@
 package tictactoe.data;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,9 +13,8 @@ import java.util.stream.Collectors;
 
 public class Board
 {
-
-    @Expose
     private final Map<Position, Seed> moves;
+
     public Board(Map<Position, Seed> moves)
     {
         this.moves = moves;
@@ -179,5 +177,23 @@ public class Board
     public static Board inflateFromJson(String json)
     {
         return new Gson().fromJson(json, Board.class);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Board board = (Board) o;
+
+        return !(moves != null ? !moves.equals(board.moves) : board.moves != null);
+
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return moves != null ? moves.hashCode() : 0;
     }
 }

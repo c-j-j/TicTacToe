@@ -19,6 +19,7 @@ public class BoardJsonTest
 
         Board inflatedBoard = Board.inflateFromJson(json);
 
-        Assert.assertThat(board.getMoves(), Matchers.is(inflatedBoard.getMoves()));
+        Assert.assertThat(board, Matchers.is(inflatedBoard));
+        Assert.assertThat(board.hashCode(), Matchers.is(inflatedBoard.hashCode()));
     }
 }
