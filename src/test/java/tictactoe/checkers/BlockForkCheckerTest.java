@@ -60,4 +60,22 @@ public class BlockForkCheckerTest
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(nextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_CENTRE, Position.MIDDLE_LEFT, Position.BOTTOM_CENTRE, Position.MIDDLE_RIGHT));
     }
+
+    @Test
+    public void shouldForceOpponentToNonForkingPositionWhenOpponentHasCentreAndCorner()
+    {
+        Board boardWithSinglePotentialFork = new BoardBuilder()
+                .withMove(Position.CENTRE, Seed.OPPONENT)
+                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
+                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .build();
+
+        NextMoveResult nextMoveResult = new BlockForkChecker()
+                .check(boardWithSinglePotentialFork, Seed.COMPUTER);
+
+        Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
+        Assert.assertThat(nextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_LEFT,Position.BOTTOM_RIGHT));
+
+
+    }
 }

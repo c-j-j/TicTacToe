@@ -51,7 +51,12 @@ public class BlockForkChecker implements Checker
 
     private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Position emptyPosition, Board boardWithAdditionalMove)
     {
-        return boardWithAdditionalMove.canSeedWin(Seed.COMPUTER).hasBeenDetermined()
-                && !forkingPositions.contains(emptyPosition);
+        NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(Seed.COMPUTER);
+        if(nextMoveResult.hasBeenDetermined()){
+           if(!forkingPositions.contains(nextMoveResult.getNextMove())) {
+               return true;
+           }
+        }
+        return false;
     }
 }
