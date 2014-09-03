@@ -6,7 +6,6 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.core.DefaultResourceConfig;
 import com.sun.jersey.simple.container.SimpleServerFactory;
-import com.sun.jersey.spi.inject.SingletonTypeInjectableProvider;
 import org.hamcrest.Matchers;
 import org.jmock.Expectations;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -26,7 +25,6 @@ import tictactoe.data.GameState;
 import tictactoe.data.Position;
 import tictactoe.data.Seed;
 
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 import java.io.Closeable;
@@ -55,7 +53,7 @@ public class TicTacToeResourceTest
         webResource = client.resource(UriBuilder.fromUri(serverAddress).build());
 
         DefaultResourceConfig resourceConfig = new DefaultResourceConfig(TicTacToeResource.class);
-        configureSingleton(resourceConfig, gameManager, GameManager.class);
+        WebUtils.configureSingleton(resourceConfig, gameManager, GameManager.class);
 
         server = SimpleServerFactory.create(serverAddress, resourceConfig);
 
@@ -65,14 +63,6 @@ public class TicTacToeResourceTest
     public void shutdownJersey() throws IOException
     {
         server.close();
-    }
-
-
-    private <T> void configureSingleton(DefaultResourceConfig resourceConfig, T singleton, Class<T> singletonType)
-    {
-        resourceConfig.getSingletons().add(new SingletonTypeInjectableProvider<Context, T>(singletonType, singleton)
-        {
-        });
     }
 
 
