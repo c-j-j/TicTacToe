@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tic Tac Toe - Chris Jordan</title>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/ticTacToeWebFactory.js"></script>
+    <script type="text/javascript" src="js/tttService.js"></script>
+    <script type="text/javascript" src="js/sprintf.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+
+
+</head>
+<body id="ng-app" ng-app="tttApp" ng-controller="tttController">
+<div class="row">
+
+    <div class="col-lg-2"></div>
+
+    <div class="col-lg-8">
+        <div class="panel panel-success">
+            <div class="panel-heading">Tic Tac Toe - By Chris Jordan</div>
+            <div class="panel-body">
+
+                <div class="row">
+
+                    <div class="col-lg-3"></div>
+
+                    <div class="col-lg-6">
+                        <div class="square" ng-click="update('TOP_LEFT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(TOP_LEFT)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('TOP_CENTRE')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(TOP_CENTRE)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('TOP_RIGHT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(TOP_RIGHT)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('MIDDLE_LEFT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(MIDDLE_LEFT)}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('CENTRE')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(CENTRE)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('MIDDLE_RIGHT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(MIDDLE_RIGHT)}}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('BOTTOM_LEFT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(BOTTOM_LEFT)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('BOTTOM_CENTRE')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(BOTTOM_CENTRE)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="square" ng-click="update('BOTTOM_RIGHT')">
+                            <div class="content">
+                                <div class="table">
+                                    <div class="table-cell">
+                                        {{render(BOTTOM_RIGHT)}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div ng-show="GameOver">
+                            <h1>{{renderResult()}}</h1>
+                            <h1><a href="#" ng-click="init()">Play again?</a></h1>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3"></div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="col-lg-2"></div>
+
+
+</div>
+
+</body>
+</html>
