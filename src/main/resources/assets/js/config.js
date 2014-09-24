@@ -1,3 +1,6 @@
 CONFIG = {
-    serverURI: "http://localhost:9000"
+    serverURI: "http://localhost:9000",
+    computerToken: "X",
+    playerToken: "O"
+
 };

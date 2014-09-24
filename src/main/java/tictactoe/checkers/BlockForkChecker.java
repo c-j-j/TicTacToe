@@ -12,10 +12,13 @@ import java.util.List;
 
 public class BlockForkChecker implements Checker
 {
+
+    private final ForkChecker forkChecker = new ForkChecker();
+
     @Override
     public NextMoveResult check(Board board, Seed seed)
     {
-        NextMoveResult nextMoveResult = new ForkChecker().check(board, SeedUtils.getOtherPlayer(seed));
+        NextMoveResult nextMoveResult = forkChecker.check(board, SeedUtils.getOtherPlayer(seed));
 
         List<Position> possibleForkingPositions = nextMoveResult.getNextMoves();
         if (possibleForkingPositions.size() == 1)
@@ -52,10 +55,12 @@ public class BlockForkChecker implements Checker
     private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Board boardWithAdditionalMove)
     {
         NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(Seed.COMPUTER);
-        if(nextMoveResult.hasBeenDetermined()){
-           if(!forkingPositions.contains(nextMoveResult.getNextMove())) {
-               return true;
-           }
+        if (nextMoveResult.hasBeenDetermined())
+        {
+            if (!forkingPositions.contains(nextMoveResult.getNextMove()))
+            {
+                return true;
+            }
         }
         return false;
     }

@@ -2,10 +2,14 @@
 
 var COMPUTER = "COMPUTER";
 var OPPONENT = "OPPONENT";
+var EMPTY = "EMPTY";
+var IN_PROGRESS = 'IN_PROGRESS';
+var COMPUTER_WINS = 'COMPUTER_WINS';
+var COMPUTER_LOSES = 'COMPUTER_LOSES';
+var DRAW = 'DRAW';
 
 angular.module('tttApp', ['tttService'])
     .controller('tttController', function ($scope, TTTService) {
-
 
         $scope.nextPlayer = COMPUTER;
 
@@ -32,7 +36,7 @@ angular.module('tttApp', ['tttService'])
             $scope.BOTTOM_RIGHT = $scope.moves['BOTTOM_RIGHT'];
         }
 
-        $scope.init = function (){
+        $scope.init = function () {
             changeNextPlayer();
 
             TTTService.newGame($scope.nextPlayer)
@@ -47,14 +51,15 @@ angular.module('tttApp', ['tttService'])
 
         $scope.update = function (position) {
 
-            if (!$scope.moves[position] != 'EMPTY' && $scope.GameProgress.currentGameState == 'IN_PROGRESS') {
+            if (!$scope.moves[position] != EMPTY && $scope.GameProgress.currentGameState == IN_PROGRESS) {
+
                 TTTService.play(position, $scope.GameProgress.board)
                     .$promise
                     .then(function (data) {
                         $scope.GameProgress = data;
                         assignMovesToScopeVariables(data);
 
-                        if($scope.GameProgress.currentGameState != 'IN_PROGRESS'){
+                        if ($scope.GameProgress.currentGameState != IN_PROGRESS) {
                             $scope.GameOver = true;
                         }
                     })
@@ -62,23 +67,26 @@ angular.module('tttApp', ['tttService'])
         };
 
         $scope.render = function (seed) {
-            if (seed == "EMPTY") {
+            if (seed == EMPTY) {
                 return "";
-            } else if (seed == "COMPUTER") {
-                return "X";
+            } else if (seed == COMPUTER) {
+                return CONFIG.computerToken;
             } else {
-                return "O";
+                return CONFIG.playerToken;
             }
         };
 
-        $scope.renderResult = function(){
+        $scope.renderResult = function () {
             var currentGameState = $scope.GameProgress.currentGameState;
-            if(currentGameState=='COMPUTER_WINS'){
+            if (currentGameState == COMPUTER_WINS) {
                 return "Computer has won";
-            }else if (currentGameState=='COMPUTER_LOSES'){
-                return "Computer has lost";
-            }else if(currentGameState=='DRAW'){
-                return "Draw";
+            } else {
+                var s = 'COMPUTER_LOSES';
+                if (currentGameState == COMPUTER_LOSES) {
+                    return "Computer has lost";
+                } else if (currentGameState == DRAW) {
+                    return "Draw";
+                }
             }
         }
     }

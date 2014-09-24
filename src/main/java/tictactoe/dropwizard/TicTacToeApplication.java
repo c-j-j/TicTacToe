@@ -47,7 +47,7 @@ public class TicTacToeApplication extends Application<NoConfiguration>
     {
         //noinspection unchecked,RedundantCast
         resourceConfig.getContainerResponseFilters().add((ContainerResponseFilter) (request, response) -> {
-            MultivaluedMap<String,Object> httpHeaders = response.getHttpHeaders();
+            MultivaluedMap<String, Object> httpHeaders = response.getHttpHeaders();
             httpHeaders.add(CROSS_DOMAIN_ACCESS_HEADER_ORIGIN, "*");
             httpHeaders.add(CROSS_DOMAIN_ACCESS_HEADER_METHODS, "GET, POST, PUT, OPTIONS, DELETE,HEAD");
             httpHeaders.add(CROSS_DOMAIN_ACCESS_HEADER_HEADERS, "X-PINGOTHER, Origin, X-Requested-With, Content-Type, Accept");

@@ -149,6 +149,24 @@ public class NextPositionHandlerTest
         Assert.assertThat(nextPositionHandler.nextMove(board), Matchers.is(Position.MIDDLE_LEFT));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void shouldThrowRunTimeExceptionWhenProvidedFullBoard() throws Exception
+    {
+        Board board = new BoardBuilder()
+                .withMove(Position.CENTRE, Seed.COMPUTER)
+                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
+                .withMove(Position.BOTTOM_RIGHT, Seed.COMPUTER)
+                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
+                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .withMove(Position.TOP_CENTRE, Seed.OPPONENT)
+                .withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER)
+                .withMove(Position.MIDDLE_RIGHT, Seed.OPPONENT)
+                .withMove(Position.MIDDLE_LEFT, Seed.OPPONENT)
+                .build();
+
+        nextPositionHandler.nextMove(board);
+    }
+
     private void configureChecker(Checker checker, Board board, boolean result)
     {
         configureChecker(checker, board, result, Position.CENTRE);

@@ -26,14 +26,22 @@ public class GameManager
         return new GameManager(new GameStateManager(), new NextPositionHandler(new ForkChecker(), new BlockForkChecker(), new OpponentInCornerChecker()));
     }
 
+    /**
+     *
+     * @param seed - represents player which is making first move.
+     * @return - GameProgress which contains game state and current board
+     */
     public GameProgress start(Seed seed)
     {
-        if(seed == Seed.COMPUTER){
+        if (seed == Seed.COMPUTER)
+        {
             return play(BoardFactory.emptyBoard());
-        }else if(seed == Seed.OPPONENT)
+        }
+        else if (seed == Seed.OPPONENT)
         {
             return new GameProgress(GameState.IN_PROGRESS, BoardFactory.emptyBoard());
-        }else
+        }
+        else
         {
             throw new IllegalArgumentException("Seed must be COMPUTER/OPPONENT");
         }

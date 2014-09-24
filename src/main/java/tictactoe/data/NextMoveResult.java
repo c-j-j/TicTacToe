@@ -9,27 +9,33 @@ public class NextMoveResult
 {
     private final List<Position> nextMoves;
 
-    public NextMoveResult(List<Position> nextMoves) {
+    public NextMoveResult(List<Position> nextMoves)
+    {
         this.nextMoves = nextMoves;
     }
 
-    public NextMoveResult(Position position) {
+    public NextMoveResult(Position position)
+    {
         this(Lists.newArrayList(position));
     }
 
-    public static NextMoveResult indeterminateResult() {
+    public static NextMoveResult indeterminateResult()
+    {
         return new NextMoveResult(Collections.emptyList());
     }
 
-    public boolean hasBeenDetermined() {
+    public boolean hasBeenDetermined()
+    {
         return nextMoves.size() > 0;
     }
 
-    public Position getNextMove() {
+    public Position getNextMove()
+    {
         return nextMoves.get(0);
     }
 
-    public List<Position> getNextMoves() {
+    public List<Position> getNextMoves()
+    {
         return nextMoves;
     }
 }

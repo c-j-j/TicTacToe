@@ -6,8 +6,6 @@ import tictactoe.data.Seed;
 
 public class GameStateManager
 {
-    public static final int EMPTY_BOARD = 0;
-
     public GameState getState(Board board)
     {
         if (board.hasSeedWon(Seed.COMPUTER))
@@ -18,7 +16,7 @@ public class GameStateManager
         {
             return GameState.COMPUTER_LOSES;
         }
-        else if (isBoardEmpty(board))
+        else if (board.hasNoEmptySpaces())
         {
             return GameState.DRAW;
         }
@@ -26,10 +24,5 @@ public class GameStateManager
         {
             return GameState.IN_PROGRESS;
         }
-    }
-
-    private boolean isBoardEmpty(Board board)
-    {
-        return board.getEmptyPositions().size() == EMPTY_BOARD;
     }
 }

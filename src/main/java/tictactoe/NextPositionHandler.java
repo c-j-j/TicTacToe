@@ -24,6 +24,11 @@ public class NextPositionHandler
 
     public Position nextMove(Board board)
     {
+        if (board.hasNoEmptySpaces())
+        {
+            throw new IllegalArgumentException("Full board handed to NextPositionHandler. NextPositionHandler should only be invoked when game is in progress");
+        }
+
         NextMoveResult computerCanWinNextMoveResult = board.canSeedWin(Seed.COMPUTER);
         if (computerCanWinNextMoveResult.hasBeenDetermined())
         {

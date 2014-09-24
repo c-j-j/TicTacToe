@@ -12,7 +12,7 @@ public class OpponentInCornerChecker implements Checker
 {
 
     /**
-     * seed - represents opponent which you'd like to place in the opposite corner
+     * will calculate whether the opponent of seed can play in a corner, and returns a result if seed can play in the opposite corner
      */
     @Override
     public NextMoveResult check(Board board, Seed seed)

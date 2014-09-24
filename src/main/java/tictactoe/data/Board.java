@@ -51,18 +51,13 @@ public class Board
 
     public NextMoveResult canSeedWin(Seed seed)
     {
-        Set<WinningLine> winningLinesForPosition = getPotentialWinningLinesForAllPositions(getPositionsForSeed(seed));
-
         List<Position> winningPositions = new ArrayList<>();
 
-        for (WinningLine winningLine : winningLinesForPosition)
+        for (WinningLine winningLine : getPotentialWinningLinesForAllPositions(getPositionsForSeed(seed)))
         {
-
-            int count = countSeedOnWinningLine(winningLine, seed);
-
-            if (count == BoardPositions.POTENTIAL_WIN)
+            if (countSeedOnWinningLine(winningLine, seed) == BoardPositions.POTENTIAL_WIN)
             {
-                Optional<Position> emptyPosition = doesEmptyExistOnLine(winningLine);
+                Optional<Position> emptyPosition = doesEmptyPositionExistOnLine(winningLine);
 
                 if (emptyPosition.isPresent())
                 {
@@ -70,6 +65,12 @@ public class Board
                 }
             }
         }
+
+        return calculateResultFromWinningPositions(winningPositions);
+    }
+
+    private NextMoveResult calculateResultFromWinningPositions(List<Position> winningPositions)
+    {
         if (winningPositions.size() > 0)
         {
             return new NextMoveResult(winningPositions);
@@ -82,7 +83,6 @@ public class Board
 
     private int countSeedOnWinningLine(WinningLine winningLine, Seed seed)
     {
-
         int count = 0;
 
         for (Position position : winningLine.getPositions())
@@ -95,7 +95,7 @@ public class Board
         return count;
     }
 
-    private Optional<Position> doesEmptyExistOnLine(WinningLine winningLine)
+    private Optional<Position> doesEmptyPositionExistOnLine(WinningLine winningLine)
     {
         return winningLine.getPositions()
                 .stream()
@@ -195,5 +195,10 @@ public class Board
     public int hashCode()
     {
         return moves != null ? moves.hashCode() : 0;
+    }
+
+    public boolean hasNoEmptySpaces()
+    {
+        return getEmptyPositions().size() == 0;
     }
 }
