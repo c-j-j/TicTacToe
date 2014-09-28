@@ -1,6 +1,7 @@
 package tictactoe.data;
 
 import com.google.gson.Gson;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,8 +75,7 @@ public class Board
         if (winningPositions.size() > 0)
         {
             return new NextMoveResult(winningPositions);
-        }
-        else
+        } else
         {
             return NextMoveResult.indeterminateResult();
         }
@@ -200,5 +200,15 @@ public class Board
     public boolean hasNoEmptySpaces()
     {
         return getEmptyPositions().size() == 0;
+    }
+
+    public boolean isGameOver()
+    {
+        throw new NotImplementedException();
+    }
+
+    public GameProgress result()
+    {
+        throw new NotImplementedException();
     }
 }
