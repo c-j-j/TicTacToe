@@ -2,17 +2,17 @@ package tictactoe;
 
 import tictactoe.data.Board;
 import tictactoe.data.GameState;
-import tictactoe.data.Seed;
+import tictactoe.data.Mark;
 
 public class GameStateManager
 {
     public GameState getState(Board board)
     {
-        if (board.hasSeedWon(Seed.COMPUTER))
+        if (board.hasSeedWon(Mark.X))
         {
             return GameState.COMPUTER_WINS;
         }
-        else if (board.hasSeedWon(Seed.OPPONENT))
+        else if (board.hasSeedWon(Mark.O))
         {
             return GameState.COMPUTER_LOSES;
         }

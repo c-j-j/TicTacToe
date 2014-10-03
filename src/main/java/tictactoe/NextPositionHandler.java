@@ -5,9 +5,9 @@ import tictactoe.checkers.Checker;
 import tictactoe.checkers.ForkChecker;
 import tictactoe.checkers.OpponentInCornerChecker;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 
 public class NextPositionHandler
 {
@@ -29,25 +29,25 @@ public class NextPositionHandler
             throw new IllegalArgumentException("Full board handed to NextPositionHandler. NextPositionHandler should only be invoked when game is in progress");
         }
 
-        NextMoveResult computerCanWinNextMoveResult = board.canSeedWin(Seed.COMPUTER);
+        NextMoveResult computerCanWinNextMoveResult = board.canSeedWin(Mark.X);
         if (computerCanWinNextMoveResult.hasBeenDetermined())
         {
             return computerCanWinNextMoveResult.getNextMove();
         }
 
-        NextMoveResult mustBlockNextMoveResult = board.canSeedWin(Seed.OPPONENT);
+        NextMoveResult mustBlockNextMoveResult = board.canSeedWin(Mark.O);
         if (mustBlockNextMoveResult.hasBeenDetermined())
         {
             return mustBlockNextMoveResult.getNextMove();
         }
 
-        NextMoveResult canForkNextMoveResult = forkChecker.check(board, Seed.COMPUTER);
+        NextMoveResult canForkNextMoveResult = forkChecker.check(board, Mark.X);
         if (canForkNextMoveResult.hasBeenDetermined())
         {
             return canForkNextMoveResult.getNextMove();
         }
 
-        NextMoveResult blockOpponentsForkCheckNextMoveResult = blockOpponentForkChecker.check(board, Seed.COMPUTER);
+        NextMoveResult blockOpponentsForkCheckNextMoveResult = blockOpponentForkChecker.check(board, Mark.X);
         if (blockOpponentsForkCheckNextMoveResult.hasBeenDetermined())
         {
             return blockOpponentsForkCheckNextMoveResult.getNextMove();
@@ -58,7 +58,7 @@ public class NextPositionHandler
             return Position.CENTRE;
         }
 
-        NextMoveResult oppositeCornerNextMoveResult = opponentInOrderChecker.check(board, Seed.COMPUTER);
+        NextMoveResult oppositeCornerNextMoveResult = opponentInOrderChecker.check(board, Mark.X);
         if (oppositeCornerNextMoveResult.hasBeenDetermined())
         {
             return oppositeCornerNextMoveResult.getNextMove();

@@ -4,9 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 import tictactoe.builders.BoardBuilder;
 
 public class ForkCheckerTest {
@@ -16,7 +16,7 @@ public class ForkCheckerTest {
         Board emptyBoard = new BoardBuilder()
                 .build();
 
-        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
+        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Mark.X);
 
         Assert.assertThat(forkNextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
@@ -28,13 +28,13 @@ public class ForkCheckerTest {
     public void shouldReturnResultWhenForkingOpportunityIsAvailable() {
 
         Board emptyBoard = new BoardBuilder()
-                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_LEFT, Seed.COMPUTER)
-                .withMove(Position.MIDDLE_LEFT, Seed.OPPONENT)
+                .withMove(Position.TOP_LEFT, Mark.X)
+                .withMove(Position.BOTTOM_LEFT, Mark.X)
+                .withMove(Position.MIDDLE_LEFT, Mark.O)
                 .build();
 
 
-        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Seed.COMPUTER);
+        NextMoveResult forkNextMoveResult = new ForkChecker().check(emptyBoard, Mark.X);
 
         Assert.assertThat(forkNextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(forkNextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.CENTRE, Position.TOP_RIGHT, Position.BOTTOM_RIGHT));

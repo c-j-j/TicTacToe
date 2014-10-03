@@ -2,6 +2,7 @@ package tictactoe;
 
 import tictactoe.data.Board;
 import tictactoe.data.GameProgress;
+import tictactoe.data.GameState;
 
 public class Game
 {
@@ -14,7 +15,7 @@ public class Game
         this.playerB = playerB;
     }
 
-    public GameProgress play(Board board)
+    public GameState play(Board board)
     {
         if (board.isGameOver())
         {
@@ -29,11 +30,15 @@ public class Game
                 break;
             }
 
+            System.out.println(board);
+
             playerB.play(board);
             if (board.isGameOver())
             {
                 break;
             }
+
+            System.out.println(board);
         }
 
         return board.result();

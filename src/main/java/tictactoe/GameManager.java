@@ -4,11 +4,8 @@ import tictactoe.builders.BoardFactory;
 import tictactoe.checkers.BlockForkChecker;
 import tictactoe.checkers.ForkChecker;
 import tictactoe.checkers.OpponentInCornerChecker;
-import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
-import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.*;
+import tictactoe.data.Mark;
 
 public class GameManager
 {
@@ -28,22 +25,22 @@ public class GameManager
 
     /**
      *
-     * @param seed - represents player which is making first move.
+     * @param mark - represents player which is making first move.
      * @return - GameProgress which contains game state and current board
      */
-    public GameProgress start(Seed seed)
+    public GameProgress start(Mark mark)
     {
-        if (seed == Seed.COMPUTER)
+        if (mark == Mark.X)
         {
             return play(BoardFactory.emptyBoard());
         }
-        else if (seed == Seed.OPPONENT)
+        else if (mark == Mark.O)
         {
             return new GameProgress(GameState.IN_PROGRESS, BoardFactory.emptyBoard());
         }
         else
         {
-            throw new IllegalArgumentException("Seed must be COMPUTER/OPPONENT");
+            throw new IllegalArgumentException("Mark must be X/O");
         }
     }
 
@@ -55,7 +52,7 @@ public class GameManager
         {
             Position nextMove = nextPositionHandler.nextMove(board);
 
-            Board updatedBoard = BoardFactory.addMove(board, nextMove, Seed.COMPUTER);
+            Board updatedBoard = BoardFactory.addMove(board, nextMove, Mark.X);
 
             return new GameProgress(gameStateManager.getState(updatedBoard), updatedBoard);
         }

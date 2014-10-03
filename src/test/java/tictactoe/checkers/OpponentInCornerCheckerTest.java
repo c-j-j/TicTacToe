@@ -4,9 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 import tictactoe.builders.BoardBuilder;
 
 public class OpponentInCornerCheckerTest
@@ -15,13 +15,13 @@ public class OpponentInCornerCheckerTest
     public void shouldReturnIndeterminateResultIfAllCornersAreOccupied()
     {
 
-        Board boardWithOccupiedCorners = new BoardBuilder().withMove(Position.TOP_LEFT, Seed.OPPONENT)
-                .withMove(Position.TOP_RIGHT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_RIGHT, Seed.OPPONENT)
+        Board boardWithOccupiedCorners = new BoardBuilder().withMove(Position.TOP_LEFT, Mark.O)
+                .withMove(Position.TOP_RIGHT, Mark.O)
+                .withMove(Position.BOTTOM_LEFT, Mark.O)
+                .withMove(Position.BOTTOM_RIGHT, Mark.O)
                 .build();
 
-        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWithOccupiedCorners, Seed.COMPUTER);
+        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWithOccupiedCorners, Mark.X);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
@@ -53,10 +53,10 @@ public class OpponentInCornerCheckerTest
     private void testOppositeCornerGetsOccupied(Position opponentPosition, Position expectedNextPositionFromPlayer)
     {
         Board boardWhereOpponentHasCorner = new BoardBuilder()
-                .withMove(opponentPosition, Seed.OPPONENT)
+                .withMove(opponentPosition, Mark.O)
                 .build();
 
-        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWhereOpponentHasCorner, Seed.COMPUTER);
+        NextMoveResult nextMoveResult = new OpponentInCornerChecker().check(boardWhereOpponentHasCorner, Mark.X);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(expectedNextPositionFromPlayer));

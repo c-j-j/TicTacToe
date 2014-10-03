@@ -5,11 +5,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import tictactoe.GameManager;
 import tictactoe.builders.BoardBuilder;
-import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
-import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.*;
+import tictactoe.data.Mark;
 
 public class IntegrationTestBase
 {
@@ -34,7 +31,7 @@ public class IntegrationTestBase
         Assert.assertFalse(String.format("Position %s already occupied", position), currentBoard.isPositionOccupied(position));
         currentBoard = new BoardBuilder()
                 .withBoard(currentBoard)
-                .withMove(position, Seed.OPPONENT)
+                .withMove(position, Mark.O)
                 .build();
     }
 
@@ -42,9 +39,9 @@ public class IntegrationTestBase
     {
         gameProgress = gameManager.play(currentBoard);
         Board board = gameProgress.getBoard();
-        String currentPositions = board.getPositionsForSeed(Seed.COMPUTER).toString();
+        String currentPositions = board.getPositionsForSeed(Mark.X).toString();
         Assert.assertThat(String.format("Expected Position: %S\nActual positions: %S", expectedPosition.toString(), currentPositions),
-                board.getSeed(expectedPosition), Matchers.is(Seed.COMPUTER));
+                board.getSeed(expectedPosition), Matchers.is(Mark.X));
         currentBoard = board;
     }
 

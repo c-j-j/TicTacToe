@@ -2,10 +2,10 @@ package tictactoe.checkers;
 
 import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
-import tictactoe.utils.SeedUtils;
+import tictactoe.utils.MarkUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +16,9 @@ public class BlockForkChecker implements Checker
     private final ForkChecker forkChecker = new ForkChecker();
 
     @Override
-    public NextMoveResult check(Board board, Seed seed)
+    public NextMoveResult check(Board board, Mark mark)
     {
-        NextMoveResult nextMoveResult = forkChecker.check(board, SeedUtils.getOtherPlayer(seed));
+        NextMoveResult nextMoveResult = forkChecker.check(board, MarkUtils.getOtherMark(mark));
 
         List<Position> possibleForkingPositions = nextMoveResult.getNextMoves();
         if (possibleForkingPositions.size() == 1)
@@ -41,7 +41,7 @@ public class BlockForkChecker implements Checker
 
         for (Position emptyPosition : board.getEmptyPositions())
         {
-            Board boardWithAdditionalMove = BoardFactory.addMove(board, emptyPosition, Seed.COMPUTER);
+            Board boardWithAdditionalMove = BoardFactory.addMove(board, emptyPosition, Mark.X);
 
             if (willForceOpponentToNonForkingPosition(forkingPositions, boardWithAdditionalMove))
             {
@@ -54,7 +54,7 @@ public class BlockForkChecker implements Checker
 
     private boolean willForceOpponentToNonForkingPosition(List<Position> forkingPositions, Board boardWithAdditionalMove)
     {
-        NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(Seed.COMPUTER);
+        NextMoveResult nextMoveResult = boardWithAdditionalMove.canSeedWin(Mark.X);
         if (nextMoveResult.hasBeenDetermined())
         {
             if (!forkingPositions.contains(nextMoveResult.getNextMove()))

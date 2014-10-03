@@ -15,9 +15,9 @@ import tictactoe.checkers.Checker;
 import tictactoe.checkers.ForkChecker;
 import tictactoe.checkers.OpponentInCornerChecker;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 
 public class NextPositionHandlerTest
 {
@@ -47,8 +47,8 @@ public class NextPositionHandlerTest
     public void shouldTryToWinGameWhenItCan() throws Exception
     {
         Board potentialWinningBoard = new BoardBuilder()
-                .withMove(Position.BOTTOM_LEFT, Seed.COMPUTER)
-                .withMove(Position.MIDDLE_LEFT, Seed.COMPUTER)
+                .withMove(Position.BOTTOM_LEFT, Mark.X)
+                .withMove(Position.MIDDLE_LEFT, Mark.X)
                 .build();
 
 
@@ -59,8 +59,8 @@ public class NextPositionHandlerTest
     public void shouldBlockOpponentIfCannotWin() throws Exception
     {
         Board potentialBlockingBoard = new BoardBuilder()
-                .withMove(Position.BOTTOM_LEFT, Seed.COMPUTER)
-                .withMove(Position.MIDDLE_LEFT, Seed.COMPUTER)
+                .withMove(Position.BOTTOM_LEFT, Mark.X)
+                .withMove(Position.MIDDLE_LEFT, Mark.X)
                 .build();
 
         Assert.assertThat(nextPositionHandler.nextMove(potentialBlockingBoard), Matchers.is(Position.TOP_LEFT));
@@ -100,7 +100,7 @@ public class NextPositionHandlerTest
     public void shouldInvokeCornerCheckerToOpponentIfOtherCheckersYeildNoResultsAndCentreIsOccupied() throws Exception
     {
         Board board = new BoardBuilder()
-                .withMove(Position.CENTRE, Seed.OPPONENT)
+                .withMove(Position.CENTRE, Mark.O)
                 .build();
         Position simulatedPosition = Position.BOTTOM_CENTRE;
 
@@ -115,7 +115,7 @@ public class NextPositionHandlerTest
     public void shouldFindEmptyCornerGivenABoardWithOccupiedCentreAndAllOtherChecksYieldNoResults() throws Exception
     {
         Board board = new BoardBuilder()
-                .withMove(Position.CENTRE, Seed.OPPONENT)
+                .withMove(Position.CENTRE, Mark.O)
                 .build();
 
         configureChecker(forkChecker, board, false);
@@ -132,14 +132,14 @@ public class NextPositionHandlerTest
     public void shouldPlayAnEmptySideGivenAllOtherChecksFailed() throws Exception
     {
         Board board = new BoardBuilder()
-                .withMove(Position.CENTRE, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_RIGHT, Seed.COMPUTER)
-                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
-                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
-                .withMove(Position.TOP_CENTRE, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER)
-                .withMove(Position.MIDDLE_RIGHT, Seed.OPPONENT)
+                .withMove(Position.CENTRE, Mark.X)
+                .withMove(Position.BOTTOM_LEFT, Mark.O)
+                .withMove(Position.BOTTOM_RIGHT, Mark.X)
+                .withMove(Position.TOP_LEFT, Mark.X)
+                .withMove(Position.TOP_RIGHT, Mark.X)
+                .withMove(Position.TOP_CENTRE, Mark.O)
+                .withMove(Position.BOTTOM_CENTRE, Mark.X)
+                .withMove(Position.MIDDLE_RIGHT, Mark.O)
                 .build();
 
         configureChecker(forkChecker, board, false);
@@ -153,15 +153,15 @@ public class NextPositionHandlerTest
     public void shouldThrowRunTimeExceptionWhenProvidedFullBoard() throws Exception
     {
         Board board = new BoardBuilder()
-                .withMove(Position.CENTRE, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_RIGHT, Seed.COMPUTER)
-                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
-                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
-                .withMove(Position.TOP_CENTRE, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER)
-                .withMove(Position.MIDDLE_RIGHT, Seed.OPPONENT)
-                .withMove(Position.MIDDLE_LEFT, Seed.OPPONENT)
+                .withMove(Position.CENTRE, Mark.X)
+                .withMove(Position.BOTTOM_LEFT, Mark.O)
+                .withMove(Position.BOTTOM_RIGHT, Mark.X)
+                .withMove(Position.TOP_LEFT, Mark.X)
+                .withMove(Position.TOP_RIGHT, Mark.X)
+                .withMove(Position.TOP_CENTRE, Mark.O)
+                .withMove(Position.BOTTOM_CENTRE, Mark.X)
+                .withMove(Position.MIDDLE_RIGHT, Mark.O)
+                .withMove(Position.MIDDLE_LEFT, Mark.O)
                 .build();
 
         nextPositionHandler.nextMove(board);
@@ -176,7 +176,7 @@ public class NextPositionHandlerTest
     {
         mockery.checking(new Expectations()
         {{
-                oneOf(checker).check(board, Seed.COMPUTER);
+                oneOf(checker).check(board, Mark.X);
 
                 if (result)
                 {

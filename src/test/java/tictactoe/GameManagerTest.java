@@ -9,11 +9,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
-import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
-import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.*;
+import tictactoe.data.Mark;
 
 public class GameManagerTest
 {
@@ -64,7 +61,7 @@ public class GameManagerTest
 
         GameProgress gameProgress = gameManager.play(board);
         Assert.assertThat(gameProgress.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
-        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Mark.X));
     }
 
     @Test
@@ -74,15 +71,15 @@ public class GameManagerTest
         final Position nextPosition = Position.CENTRE;
         configureNextPositionHandler(nextPosition);
 
-        GameProgress gameProgress = gameManager.start(Seed.COMPUTER);
+        GameProgress gameProgress = gameManager.start(Mark.X);
         Assert.assertThat(gameProgress.getCurrentGameState(), Matchers.is(GameState.IN_PROGRESS));
-        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Seed.COMPUTER));
+        Assert.assertThat(gameProgress.getBoard().getSeed(nextPosition), Matchers.is(Mark.X));
     }
 
     @Test
     public void shouldProvideEmptyBoardWhenPlayerIsGoingFirst() throws Exception
     {
-        GameProgress gameProgress = gameManager.start(Seed.OPPONENT);
+        GameProgress gameProgress = gameManager.start(Mark.O);
 
         Assert.assertThat(gameProgress.getBoard().getEmptyPositions().size(), Matchers.is(9));
     }
@@ -90,7 +87,7 @@ public class GameManagerTest
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowExceptionWhenEmptySeedIsPassedToGameManager() throws Exception
     {
-        gameManager.start(Seed.EMPTY);
+        gameManager.start(Mark.EMPTY);
     }
 
     private void configureNextPositionHandler(final Position nextPosition)

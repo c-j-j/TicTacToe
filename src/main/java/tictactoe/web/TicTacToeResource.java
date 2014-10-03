@@ -3,8 +3,8 @@ package tictactoe.web;
 import tictactoe.GameManager;
 import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -29,15 +29,15 @@ public class TicTacToeResource
 
     @GET
     @Path(NEW_GAME)
-    public String newGame(@QueryParam(FIRST_PLAYER) Seed seed)
+    public String newGame(@QueryParam(FIRST_PLAYER) Mark mark)
     {
-        return gameManager.start(seed).toJson();
+        return gameManager.start(mark).toJson();
     }
 
     @GET
     @Path(NEXT_MOVE)
     public String playNextMove(@QueryParam(NEXT_POSITION) Position position, @QueryParam(BOARD) String board)
     {
-        return gameManager.play(BoardFactory.addMove(Board.inflateFromJson(board), position, Seed.OPPONENT)).toJson();
+        return gameManager.play(BoardFactory.addMove(Board.inflateFromJson(board), position, Mark.O)).toJson();
     }
 }

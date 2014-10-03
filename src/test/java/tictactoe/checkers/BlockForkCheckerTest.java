@@ -4,9 +4,9 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.data.Board;
+import tictactoe.data.Mark;
 import tictactoe.data.NextMoveResult;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 import tictactoe.builders.BoardBuilder;
 
 public class BlockForkCheckerTest
@@ -17,7 +17,7 @@ public class BlockForkCheckerTest
         Board emptyBoard = new BoardBuilder().build();
 
         NextMoveResult nextMoveResult = new BlockForkChecker()
-                .check(emptyBoard, Seed.OPPONENT);
+                .check(emptyBoard, Mark.O);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(false));
     }
@@ -29,14 +29,14 @@ public class BlockForkCheckerTest
     public void shouldBlockPositionWhenOpponentCanForkInOnePosition() throws Exception
     {
         Board boardWithSinglePotentialFork = new BoardBuilder()
-                .withMove(Position.TOP_LEFT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
-                .withMove(Position.MIDDLE_LEFT, Seed.COMPUTER)
-                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .withMove(Position.TOP_LEFT, Mark.O)
+                .withMove(Position.BOTTOM_LEFT, Mark.O)
+                .withMove(Position.MIDDLE_LEFT, Mark.X)
+                .withMove(Position.TOP_RIGHT, Mark.X)
                 .build();
 
         NextMoveResult nextMoveResult = new BlockForkChecker()
-                .check(boardWithSinglePotentialFork, Seed.COMPUTER);
+                .check(boardWithSinglePotentialFork, Mark.X);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(nextMoveResult.getNextMove(), Matchers.is(Position.BOTTOM_RIGHT));
@@ -49,13 +49,13 @@ public class BlockForkCheckerTest
     public void shouldForceOpponentToNonForkingPositionWhenOpponentCanForkInTwoPositions() throws Exception
     {
         Board boardWithSinglePotentialFork = new BoardBuilder()
-                .withMove(Position.TOP_LEFT, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_RIGHT, Seed.OPPONENT)
-                .withMove(Position.CENTRE, Seed.COMPUTER)
+                .withMove(Position.TOP_LEFT, Mark.O)
+                .withMove(Position.BOTTOM_RIGHT, Mark.O)
+                .withMove(Position.CENTRE, Mark.X)
                 .build();
 
         NextMoveResult nextMoveResult = new BlockForkChecker()
-                .check(boardWithSinglePotentialFork, Seed.COMPUTER);
+                .check(boardWithSinglePotentialFork, Mark.X);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(nextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_CENTRE, Position.MIDDLE_LEFT, Position.BOTTOM_CENTRE, Position.MIDDLE_RIGHT));
@@ -65,13 +65,13 @@ public class BlockForkCheckerTest
     public void shouldForceOpponentToNonForkingPositionWhenOpponentHasCentreAndCorner()
     {
         Board boardWithSinglePotentialFork = new BoardBuilder()
-                .withMove(Position.CENTRE, Seed.OPPONENT)
-                .withMove(Position.BOTTOM_LEFT, Seed.OPPONENT)
-                .withMove(Position.TOP_RIGHT, Seed.COMPUTER)
+                .withMove(Position.CENTRE, Mark.O)
+                .withMove(Position.BOTTOM_LEFT, Mark.O)
+                .withMove(Position.TOP_RIGHT, Mark.X)
                 .build();
 
         NextMoveResult nextMoveResult = new BlockForkChecker()
-                .check(boardWithSinglePotentialFork, Seed.COMPUTER);
+                .check(boardWithSinglePotentialFork, Mark.X);
 
         Assert.assertThat(nextMoveResult.hasBeenDetermined(), Matchers.is(true));
         Assert.assertThat(nextMoveResult.getNextMoves(), Matchers.containsInAnyOrder(Position.TOP_LEFT,Position.BOTTOM_RIGHT));

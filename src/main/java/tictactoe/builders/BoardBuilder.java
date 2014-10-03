@@ -2,14 +2,14 @@ package tictactoe.builders;
 
 import tictactoe.data.Board;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.Mark;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class BoardBuilder
 {
-    Map<Position, Seed> moves = new HashMap<>();
+    Map<Position, Mark> moves = new HashMap<>();
 
     public BoardBuilder()
     {
@@ -18,20 +18,20 @@ public class BoardBuilder
 
     private void constructEmptyBoard()
     {
-        moves.put(Position.TOP_RIGHT, Seed.EMPTY);
-        moves.put(Position.TOP_CENTRE, Seed.EMPTY);
-        moves.put(Position.TOP_LEFT, Seed.EMPTY);
-        moves.put(Position.MIDDLE_RIGHT, Seed.EMPTY);
-        moves.put(Position.CENTRE, Seed.EMPTY);
-        moves.put(Position.MIDDLE_LEFT, Seed.EMPTY);
-        moves.put(Position.BOTTOM_RIGHT, Seed.EMPTY);
-        moves.put(Position.BOTTOM_CENTRE, Seed.EMPTY);
-        moves.put(Position.BOTTOM_LEFT, Seed.EMPTY);
+        moves.put(Position.TOP_RIGHT, Mark.EMPTY);
+        moves.put(Position.TOP_CENTRE, Mark.EMPTY);
+        moves.put(Position.TOP_LEFT, Mark.EMPTY);
+        moves.put(Position.MIDDLE_RIGHT, Mark.EMPTY);
+        moves.put(Position.CENTRE, Mark.EMPTY);
+        moves.put(Position.MIDDLE_LEFT, Mark.EMPTY);
+        moves.put(Position.BOTTOM_RIGHT, Mark.EMPTY);
+        moves.put(Position.BOTTOM_CENTRE, Mark.EMPTY);
+        moves.put(Position.BOTTOM_LEFT, Mark.EMPTY);
     }
 
-    public BoardBuilder withMove(Position position, Seed seed)
+    public BoardBuilder withMove(Position position, Mark mark)
     {
-        moves.put(position, seed);
+        moves.put(position, mark);
         return this;
     }
 

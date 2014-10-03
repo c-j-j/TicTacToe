@@ -6,14 +6,14 @@ import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.Mark;
 
 public class BoardJsonTest
 {
     @Test
     public void shouldInflateBoardIntoJson() throws Exception
     {
-        Board board = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER).build();
+        Board board = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Mark.X).build();
 
         String json = board.toJson();
 

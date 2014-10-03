@@ -19,11 +19,8 @@ import org.junit.Test;
 import tictactoe.GameManager;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.builders.BoardFactory;
-import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
-import tictactoe.data.Position;
-import tictactoe.data.Seed;
+import tictactoe.data.*;
+import tictactoe.data.Mark;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
@@ -69,24 +66,24 @@ public class TicTacToeResourceTest
     @Test
     public void shouldStartNewGameWithComputerPlayingFirstGo() throws Exception
     {
-        testNewGameWebService(Seed.COMPUTER);
+        testNewGameWebService(Mark.X);
     }
 
     @Test
     public void shouldStartNewGameWithOpponentPlayingFirstGo() throws Exception
     {
-        testNewGameWebService(Seed.OPPONENT);
+        testNewGameWebService(Mark.O);
     }
 
     @Test
     public void shouldPlayNextMoveGivenBoardAndNextPosition() throws Exception
     {
-        Board currentBoard = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER).build();
+        Board currentBoard = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Mark.X).build();
         Position opponentPositionToBePlayed = Position.CENTRE;
 
-        Board boardAfterOpponentHasPlayed = BoardFactory.addMove(currentBoard, opponentPositionToBePlayed, Seed.OPPONENT);
+        Board boardAfterOpponentHasPlayed = BoardFactory.addMove(currentBoard, opponentPositionToBePlayed, Mark.O);
         GameProgress simulatedGameProgress = new GameProgress(GameState.COMPUTER_LOSES,
-                BoardFactory.addMove(boardAfterOpponentHasPlayed, Position.TOP_LEFT, Seed.COMPUTER));
+                BoardFactory.addMove(boardAfterOpponentHasPlayed, Position.TOP_LEFT, Mark.X));
         expectGameManagerPlayMethodToBeCalled(boardAfterOpponentHasPlayed, simulatedGameProgress);
 
         ClientResponse clientResponse = invokeWebServiceToPlayNextMove(currentBoard, opponentPositionToBePlayed);
@@ -115,21 +112,21 @@ public class TicTacToeResourceTest
                 .get(ClientResponse.class);
     }
 
-    private void testNewGameWebService(Seed seed)
+    private void testNewGameWebService(Mark mark)
     {
-        GameProgress simulatedGameProgress = expectCallToGameManagerStart(seed);
-        ClientResponse clientResponse = callNewGameWebResource(seed);
+        GameProgress simulatedGameProgress = expectCallToGameManagerStart(mark);
+        ClientResponse clientResponse = callNewGameWebResource(mark);
         GameProgress gameProgress = GameProgress.inflateFromJson(clientResponse.getEntity(String.class));
         Assert.assertThat(gameProgress.getBoard(), Matchers.is(simulatedGameProgress.getBoard()));
     }
 
-    private GameProgress expectCallToGameManagerStart(Seed seed)
+    private GameProgress expectCallToGameManagerStart(Mark mark)
     {
         GameProgress gameProgress = new GameProgress(GameState.IN_PROGRESS, BoardFactory.emptyBoard());
 
         mockery.checking(new Expectations()
         {{
-                oneOf(gameManager).start(seed);
+                oneOf(gameManager).start(mark);
                 will(returnValue(gameProgress));
 
             }});
@@ -137,11 +134,11 @@ public class TicTacToeResourceTest
         return gameProgress;
     }
 
-    private ClientResponse callNewGameWebResource(Seed seed)
+    private ClientResponse callNewGameWebResource(Mark mark)
     {
         return webResource.path(TicTacToeResource.ROOT)
                 .path(TicTacToeResource.NEW_GAME)
-                .queryParam(TicTacToeResource.FIRST_PLAYER, seed.name())
+                .queryParam(TicTacToeResource.FIRST_PLAYER, mark.name())
                 .accept(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
     }

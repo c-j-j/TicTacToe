@@ -6,8 +6,8 @@ import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
 import tictactoe.data.GameState;
+import tictactoe.data.Mark;
 import tictactoe.data.Position;
-import tictactoe.data.Seed;
 
 public class GameStateManagerTest
 {
@@ -29,15 +29,15 @@ public class GameStateManagerTest
     public void shouldReturnDrawWhenBoardIsEmptyAndNoOneHasWon() throws Exception
     {
         Board board = new BoardBuilder()
-                .withMove(Position.TOP_LEFT, Seed.COMPUTER)
-                .withMove(Position.TOP_CENTRE, Seed.OPPONENT)
-                .withMove(Position.TOP_RIGHT, Seed.OPPONENT)
-                .withMove(Position.MIDDLE_LEFT, Seed.OPPONENT)
-                .withMove(Position.CENTRE, Seed.OPPONENT)
-                .withMove(Position.MIDDLE_RIGHT, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_LEFT, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_CENTRE, Seed.COMPUTER)
-                .withMove(Position.BOTTOM_RIGHT, Seed.OPPONENT)
+                .withMove(Position.TOP_LEFT, Mark.X)
+                .withMove(Position.TOP_CENTRE, Mark.O)
+                .withMove(Position.TOP_RIGHT, Mark.O)
+                .withMove(Position.MIDDLE_LEFT, Mark.O)
+                .withMove(Position.CENTRE, Mark.O)
+                .withMove(Position.MIDDLE_RIGHT, Mark.X)
+                .withMove(Position.BOTTOM_LEFT, Mark.X)
+                .withMove(Position.BOTTOM_CENTRE, Mark.X)
+                .withMove(Position.BOTTOM_RIGHT, Mark.O)
                 .build();
 
         GameState gameState = new GameStateManager().getState(board);
@@ -48,21 +48,21 @@ public class GameStateManagerTest
     @Test
     public void shouldReturnComputerWinWhenComputerHasThreeInRow() throws Exception
     {
-        testGameStateCanFindWinner(Seed.COMPUTER, GameState.COMPUTER_WINS);
+        testGameStateCanFindWinner(Mark.X, GameState.COMPUTER_WINS);
     }
 
     @Test
     public void shouldReturnComputerLosesWhenOpponentHasThreeInRow() throws Exception
     {
-        testGameStateCanFindWinner(Seed.OPPONENT, GameState.COMPUTER_LOSES);
+        testGameStateCanFindWinner(Mark.O, GameState.COMPUTER_LOSES);
     }
 
-    private void testGameStateCanFindWinner(Seed seed, GameState state)
+    private void testGameStateCanFindWinner(Mark mark, GameState state)
     {
         Board board = new BoardBuilder()
-                .withMove(Position.TOP_LEFT, seed)
-                .withMove(Position.TOP_CENTRE, seed)
-                .withMove(Position.TOP_RIGHT, seed)
+                .withMove(Position.TOP_LEFT, mark)
+                .withMove(Position.TOP_CENTRE, mark)
+                .withMove(Position.TOP_RIGHT, mark)
                 .build();
 
         GameState gameState = new GameStateManager().getState(board);
