@@ -6,6 +6,7 @@ import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineRenderer implements GameRenderer
@@ -26,27 +27,41 @@ public class CommandLineRenderer implements GameRenderer
     @Override
     public void draw(Board board)
     {
-        System.out.print(board + "\r");
+        System.out.println(board);
     }
 
     @Override
-    public void displayResult(GameOutcome winner)
+    public void displayResult(GameOutcome gameOutcome)
     {
-        System.out.printf("%s has won\n", Mark.X.name());
+        System.out.println(gameOutcome.getMessage());
     }
 
     @Override
     public Position getPositionFromUser(Board board, Mark mark)
     {
-        System.out.printf("Your move (You are %s). Enter number corresponding to your move.\n", mark.name());
-        for (Position position : board.getEmptyPositions())
+        boolean invalidInputProvided = true;
+        int userSpecifiedInteger = 0;
+        while (invalidInputProvided)
         {
-            System.out.printf("%s:%d,", position.name(), position.getIntegerRepresentation());
+            System.out.printf("Your move (You are %s). Enter number corresponding to your move.\n", mark.name());
+            for (Position position : board.getEmptyPositions())
+            {
+                System.out.printf("%s:%d,", position.name(), position.getIntegerRepresentation());
+            }
+            System.out.println();
+
+            userSpecifiedInteger = new Scanner(inputStream).nextInt();
+
+            if (InputValidator.isValid(userSpecifiedInteger, board.getEmptyPositions()))
+            {
+                invalidInputProvided = false;
+            } else
+            {
+                System.out.println("Invalid number entered. Choose from list below");
+            }
+
         }
-        System.out.println();
-
-        int userSpecifiedInteger = new Scanner(inputStream).nextInt();
-
         return Position.getPosition(userSpecifiedInteger);
+
     }
 }

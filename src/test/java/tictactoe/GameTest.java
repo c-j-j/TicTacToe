@@ -34,7 +34,6 @@ public class GameTest
         playerA = mockery.mock(Player.class, "playerA");
         playerB = mockery.mock(Player.class, "playerB");
         gameRenderer = mockery.mock(GameRenderer.class);
-
     }
 
     @Test

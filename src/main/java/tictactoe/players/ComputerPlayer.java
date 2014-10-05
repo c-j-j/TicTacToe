@@ -1,6 +1,5 @@
 package tictactoe.players;
 
-import tictactoe.ComputerPlayerException;
 import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
 import tictactoe.data.Position;
@@ -29,10 +28,10 @@ public class ComputerPlayer implements Player
 
     private void updateBoardUsingMinimax(Board board)
     {
-        minimax(board, true, 0);
+        minimax(board, true);
     }
 
-    private int minimax(Board board, boolean thisPlayersTurn, int depth)
+    private int minimax(Board board, boolean thisPlayersTurn)
     {
         if (board.isGameOver())
         {
@@ -43,8 +42,7 @@ public class ComputerPlayer implements Player
 
         for (Position emptyPosition : board.getEmptyPositions())
         {
-            positionScores.put(emptyPosition,
-                    minimax(BoardFactory.addMove(board, emptyPosition, determineMark(thisPlayersTurn)), !thisPlayersTurn, ++depth));
+            positionScores.put(emptyPosition, minimax(BoardFactory.addMove(board, emptyPosition, determineMark(thisPlayersTurn)), !thisPlayersTurn));
         }
 
         if (thisPlayersTurn)

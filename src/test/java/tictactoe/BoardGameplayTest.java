@@ -11,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
+import tictactoe.data.InvalidMoveException;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
 import tictactoe.players.Player;
@@ -49,7 +50,7 @@ public class BoardGameplayTest
     }
 
     @Test
-    public void onlyInvokePlayerAIfPlayerAWinsGame()
+    public void onlyGetMoveFromPlayerAIfPlayerAWinsGame()
     {
         Board board = new BoardBuilder()
                 .withMove(Position.BOTTOM_CENTRE, Mark.O)
@@ -76,6 +77,13 @@ public class BoardGameplayTest
         expectGameRendererToBeCalled();
 
         board.playGame(playerA, playerB, gameRenderer);
+    }
+
+    @Test(expected = InvalidMoveException.class)
+    public void throwRuntimeExceptionWhenAttemptToOverridePosition()
+    {
+        Board board = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Mark.O).build();
+        board.addMark(Position.BOTTOM_CENTRE, Mark.X);
     }
 
     private void expectGameRendererToBeCalled()

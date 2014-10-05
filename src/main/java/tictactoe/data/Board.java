@@ -3,11 +3,7 @@ package tictactoe.data;
 import tictactoe.players.Player;
 import tictactoe.render.GameRenderer;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board
@@ -41,14 +37,9 @@ public class Board
 
     public List<Position> getEmptyPositions()
     {
-        return moves.keySet().stream().filter(p -> moves.get(p) == Mark.EMPTY).collect(Collectors.toList());
-    }
-
-    public List<Position> getPositionsForSeed(Mark mark)
-    {
-        return moves.keySet()
-                .stream()
-                .filter(position -> moves.get(position) == mark)
+        return moves.keySet().stream()
+                .filter(p -> moves.get(p) == Mark.EMPTY)
+                .sorted((o1, o2) -> Integer.valueOf(o1.getIntegerRepresentation()).compareTo(o2.getIntegerRepresentation()))
                 .collect(Collectors.toList());
     }
 
@@ -90,31 +81,9 @@ public class Board
         return true;
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Board board = (Board) o;
-
-        return !(moves != null ? !moves.equals(board.moves) : board.moves != null);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return moves != null ? moves.hashCode() : 0;
-    }
-
-    public boolean hasNoEmptySpaces()
-    {
-        return getEmptyPositions().size() == 0;
-    }
-
     public boolean isGameOver()
     {
-        return hasSeedWon(Mark.X) || hasSeedWon(Mark.O) || hasNoEmptySpaces();
+        return hasSeedWon(Mark.X) || hasSeedWon(Mark.O) || getEmptyPositions().size() == 0;
     }
 
     public GameOutcome result()
@@ -136,6 +105,10 @@ public class Board
 
     public void addMark(Position position, Mark mark)
     {
+        if (!(moves.get(position) == Mark.EMPTY))
+        {
+            throw new InvalidMoveException(String.format("Position %s already taken.", position.name()));
+        }
         moves.put(position, mark);
     }
 
@@ -155,24 +128,24 @@ public class Board
 
         while (!this.isGameOver())
         {
-            if (updateBoardWithPlayerMove(playerA, gameRenderer))
+            updateBoardWithPlayerMove(playerA, gameRenderer);
+            if (this.isGameOver())
             {
                 break;
             }
 
-            if (updateBoardWithPlayerMove(playerB, gameRenderer))
+            updateBoardWithPlayerMove(playerB, gameRenderer);
+            if (this.isGameOver())
             {
                 break;
             }
         }
-        gameRenderer.draw(this);
     }
 
-    private boolean updateBoardWithPlayerMove(Player playerA, GameRenderer gameRenderer)
+    private void updateBoardWithPlayerMove(Player player, GameRenderer gameRenderer)
     {
-        playerA.play(this);
+        player.play(this);
         gameRenderer.draw(this);
-        return this.isGameOver();
     }
 
     public String toString()

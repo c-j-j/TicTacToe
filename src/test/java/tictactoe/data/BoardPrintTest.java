@@ -10,7 +10,6 @@ import static org.junit.Assert.*;
 
 public class BoardPrintTest
 {
-
     @Test
     public void shouldPrintBoardAccordingly() throws Exception
     {

@@ -28,5 +28,4 @@ public enum Position
         }
         throw new IllegalArgumentException("Invalid integer given. Must be a number between 0-8");
     }
-
 }
