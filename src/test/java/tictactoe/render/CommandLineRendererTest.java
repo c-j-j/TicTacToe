@@ -1,19 +1,14 @@
-package tictactoe;
+package tictactoe.render;
 
 import org.hamcrest.Matchers;
-import org.jmock.Expectations;
-import org.jmock.integration.junit4.JUnitRuleMockery;
-import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
+import tictactoe.render.CommandLineRenderer;
 
 import java.io.ByteArrayInputStream;
-import java.util.Scanner;
 
 public class CommandLineRendererTest
 {

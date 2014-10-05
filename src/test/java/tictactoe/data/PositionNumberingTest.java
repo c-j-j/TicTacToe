@@ -1,4 +1,4 @@
-package tictactoe.utils;
+package tictactoe.data;
 
 import org.hamcrest.Matchers;
 import org.junit.Assert;

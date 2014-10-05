@@ -8,9 +8,11 @@ import tictactoe.data.Board;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
-public class BoardQueryTest {
+public class BoardQueryTest
+{
     @Test
-    public void shouldReturnTrueWhenPositionIsOccupied() throws Exception {
+    public void shouldReturnTrueWhenPositionIsOccupied() throws Exception
+    {
         Position bottomCentre = Position.BOTTOM_CENTRE;
         Board board = new BoardBuilder().withMove(bottomCentre, Mark.X).build();
 
@@ -18,14 +20,16 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void shouldReturnFalseWhenPositionIsOccupied() throws Exception {
+    public void shouldReturnFalseWhenPositionIsOccupied() throws Exception
+    {
         Board board = new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Mark.X).build();
 
         Assert.assertFalse(board.isPositionOccupied(Position.TOP_CENTRE));
     }
 
     @Test
-    public void shouldReturnTrueIfSeedHasWon() throws Exception {
+    public void shouldReturnTrueIfSeedHasWon() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)
                 .withMove(Position.TOP_CENTRE, Mark.X)
@@ -36,7 +40,8 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void shouldReturnFalseIfSeedHasNotWon() throws Exception {
+    public void shouldReturnFalseIfSeedHasNotWon() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)
                 .withMove(Position.TOP_RIGHT, Mark.X)
@@ -46,7 +51,8 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void isGameOverShouldBeTrueIfXHasWon() throws Exception {
+    public void isGameOverShouldBeTrueIfXHasWon() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)
                 .withMove(Position.TOP_RIGHT, Mark.X)
@@ -57,7 +63,8 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void isGameOverShouldBeTrueIfOHasWon() throws Exception {
+    public void isGameOverShouldBeTrueIfOHasWon() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.O)
                 .withMove(Position.TOP_RIGHT, Mark.O)
@@ -68,7 +75,8 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void isGameOverShouldBeTrueIfItIsADraw() throws Exception {
+    public void isGameOverShouldBeTrueIfItIsADraw() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)
                 .withMove(Position.TOP_CENTRE, Mark.O)
@@ -85,7 +93,8 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void isGameOverShouldBeFalseIfGameIsInProgress() throws Exception {
+    public void isGameOverShouldBeFalseIfGameIsInProgress() throws Exception
+    {
         Assert.assertThat(new BoardBuilder().build().isGameOver(), Matchers.is(false));
 
     }

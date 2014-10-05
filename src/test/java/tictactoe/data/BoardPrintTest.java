@@ -8,10 +8,12 @@ import tictactoe.builders.BoardFactory;
 
 import static org.junit.Assert.*;
 
-public class BoardPrintTest {
+public class BoardPrintTest
+{
 
     @Test
-    public void shouldPrintBoardAccordingly() throws Exception {
+    public void shouldPrintBoardAccordingly() throws Exception
+    {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)
                 .withMove(Position.TOP_CENTRE, Mark.O)

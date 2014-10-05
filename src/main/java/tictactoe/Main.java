@@ -2,6 +2,9 @@ package tictactoe;
 
 import tictactoe.builders.BoardFactory;
 import tictactoe.data.Mark;
+import tictactoe.players.ComputerPlayer;
+import tictactoe.players.HumanPlayer;
+import tictactoe.render.CommandLineRenderer;
 
 import java.util.Scanner;
 
@@ -20,10 +23,10 @@ public class Main
 
             if (firstOrSecond == 1)
             {
-                new Game(new HumanPlayer(Mark.X, new CommandLineRenderer()), new ComputerPlayer(Mark.O)).play(BoardFactory.emptyBoard());
+                new Game(new CommandLineRenderer()).play(BoardFactory.emptyBoard(), new HumanPlayer(Mark.X, new CommandLineRenderer()), new ComputerPlayer(Mark.O));
             } else
             {
-                new Game(new ComputerPlayer(Mark.O), new HumanPlayer(Mark.X, new CommandLineRenderer())).play(BoardFactory.emptyBoard());
+                new Game(new CommandLineRenderer()).play(BoardFactory.emptyBoard(), new ComputerPlayer(Mark.O), new HumanPlayer(Mark.X, new CommandLineRenderer()));
             }
 
             System.out.println("Play again? Y/N");

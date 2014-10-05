@@ -1,12 +1,8 @@
-package tictactoe;
+package tictactoe.players;
 
 import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
 import tictactoe.data.Mark;
-import tictactoe.data.Position;
-import tictactoe.utils.PositionUtils;
-
-import java.util.Scanner;
+import tictactoe.render.GameRenderer;
 
 public class HumanPlayer implements Player
 {
@@ -22,6 +18,6 @@ public class HumanPlayer implements Player
     @Override
     public void play(Board board)
     {
-        board.addMark(mark, gameRenderer.getPositionFromUser(board, mark));
+        board.addMark(gameRenderer.getPositionFromUser(board, mark), mark);
     }
 }

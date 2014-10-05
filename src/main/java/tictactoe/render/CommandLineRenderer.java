@@ -1,11 +1,10 @@
-package tictactoe;
+package tictactoe.render;
 
 import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
+import tictactoe.data.GameOutcome;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -31,15 +30,9 @@ public class CommandLineRenderer implements GameRenderer
     }
 
     @Override
-    public void endResult(GameProgress result)
+    public void displayResult(GameOutcome winner)
     {
-
-    }
-
-    @Override
-    public boolean newGameQuery()
-    {
-        return false;
+        System.out.printf("%s has won\n", Mark.X.name());
     }
 
     @Override

@@ -11,6 +11,8 @@ import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
+import tictactoe.players.HumanPlayer;
+import tictactoe.render.GameRenderer;
 
 public class HumanPlayerTest
 {

@@ -3,7 +3,6 @@ package tictactoe;
 import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.hamcrest.Matchers;
 import org.jmock.Expectations;
-import org.jmock.Sequence;
 import org.jmock.integration.junit4.JUnitRuleMockery;
 import org.jmock.lib.legacy.ClassImposteriser;
 import org.junit.Assert;
@@ -11,8 +10,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
+import tictactoe.data.GameOutcome;
+import tictactoe.players.Player;
+import tictactoe.render.GameRenderer;
 
 @Ignore
 public class GameTest
@@ -25,94 +25,47 @@ public class GameTest
     private Player playerA;
     private Player playerB;
     private Board board;
-    private Game game;
-    private GameProgress simulatedGameProgress;
-    private Sequence boardInvocationSequence;
+    private GameRenderer gameRenderer;
 
     @Before
     public void setUp() throws Exception
     {
+        board = mockery.mock(Board.class);
         playerA = mockery.mock(Player.class, "playerA");
         playerB = mockery.mock(Player.class, "playerB");
+        gameRenderer = mockery.mock(GameRenderer.class);
 
-        board = mockery.mock(Board.class, "board");
-
-        game = new Game(playerA, playerB);
-        simulatedGameProgress = new GameProgress(GameState.DRAW, board);
-
-        boardInvocationSequence = mockery.sequence("boardInvocationSequence");
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldThrowExceptionIfGameIsAlreadyOver()
-    {
-        expectPlayerToInvoked(playerA, 0);
-        expectPlayerToInvoked(playerB, 0);
-
-        configureIfBoardIsInGameOverState(true);
-        game.play(board);
     }
 
     @Test
-    public void shouldOnlyInvokePlayerAIfPlayerACausesBoardToGoToGameOverState()
+    public void shouldDelegateGamePlayToBoardObject()
     {
-        expectPlayerToInvoked(playerA, 1);
-        expectPlayerToInvoked(playerB, 0);
+        GameOutcome gameOutcome = GameOutcome.DRAW;
+        expectCallToBoard(gameOutcome);
+        expectCallToRenderer(gameOutcome);
+        GameOutcome returnedGameOutcome = new Game(gameRenderer).play(board, playerA, playerB);
 
-        configureIfBoardIsInGameOverState(false, false, true);
-
-        configureResultFromBoard(simulatedGameProgress);
-       // GameProgress actualGameProgress = game.play(board);
-
-        //Assert.assertThat(actualGameProgress, Matchers.is(simulatedGameProgress));
+        Assert.assertThat(returnedGameOutcome, Matchers.is(gameOutcome));
     }
 
-    @Test
-    public void shouldOnlyInvokePlayerAAndBWhenBoardIsInNonGameOverState()
-    {
-        expectPlayerToInvoked(playerA, 1);
-        expectPlayerToInvoked(playerB, 1);
-
-        configureIfBoardIsInGameOverState(false, false, false, true);
-
-        configureResultFromBoard(simulatedGameProgress);
-      //  GameProgress actualGameProgress = game.play(board);
-
-      //  Assert.assertThat(actualGameProgress, Matchers.is(simulatedGameProgress));
-    }
-
-    private void configureResultFromBoard(final GameProgress gameProgress)
+    private void expectCallToRenderer(GameOutcome gameOutcome)
     {
         mockery.checking(new Expectations()
         {
             {
+                oneOf(gameRenderer).displayResult(gameOutcome);
+            }
+        });
+    }
+
+    private void expectCallToBoard(final GameOutcome gameOutcome)
+    {
+        mockery.checking(new Expectations()
+        {
+            {
+                oneOf(board).playGame(playerA, playerB, gameRenderer);
                 oneOf(board).result();
-                will(returnValue(gameProgress));
-            }
-        });
-    }
-
-    private void configureIfBoardIsInGameOverState(final boolean... sequenceOfResults)
-    {
-        mockery.checking(new Expectations()
-        {
-            {
-                for (boolean result : sequenceOfResults)
-                {
-                    oneOf(board).isGameOver();
-                    will(returnValue(result));
-                    inSequence(boardInvocationSequence);
-                }
-            }
-        });
-    }
-
-    private void expectPlayerToInvoked(final Player player, final int countOfInvocations)
-    {
-        mockery.checking(new Expectations()
-        {
-            {
-                exactly(countOfInvocations).of(player).play(with(any(Board.class)));
+                will(returnValue(gameOutcome));
             }
         });
     }

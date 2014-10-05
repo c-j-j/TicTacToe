@@ -1,49 +1,24 @@
 package tictactoe;
 
 import tictactoe.data.Board;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
+import tictactoe.data.GameOutcome;
+import tictactoe.players.Player;
+import tictactoe.render.GameRenderer;
 
 public class Game
 {
-    private final Player playerA;
-    private final Player playerB;
+    private final GameRenderer gameRenderer;
 
-    public Game(Player playerA, Player playerB)
+    public Game(GameRenderer gameRenderer)
     {
-        this.playerA = playerA;
-        this.playerB = playerB;
+        this.gameRenderer = gameRenderer;
     }
 
-    public GameState play(Board board)
+    public GameOutcome play(Board board, Player playerA, Player playerB)
     {
-        if (board.isGameOver())
-        {
-            throw new IllegalArgumentException("Board provided is already in a final state.");
-        }
-        writeBoardToScreen(board);
-
-        while (!board.isGameOver())
-        {
-            playerA.play(board);
-            if (board.isGameOver())
-            {
-                break;
-            }
-
-            writeBoardToScreen(board);
-
-            playerB.play(board);
-            if (board.isGameOver())
-            {
-                break;
-            }
-
-            writeBoardToScreen(board);
-        }
-        writeBoardToScreen(board);
-        return board.result();
+        board.playGame(playerA, playerB, gameRenderer);
+        GameOutcome gameOutcome = board.result();
+        gameRenderer.displayResult(gameOutcome);
+        return gameOutcome;
     }
-
-    private void writeBoardToScreen(Board board) {System.out.println(board);}
 }

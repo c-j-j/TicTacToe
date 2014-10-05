@@ -22,9 +22,4 @@ public class WinningLine
     {
         return Lists.newArrayList(positionA, positionB, positionC);
     }
-
-    public boolean contains(Position position)
-    {
-        return positionA == position || positionB == position || positionC == position;
-    }
 }
