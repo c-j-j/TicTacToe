@@ -25,53 +25,6 @@ public class BoardQueryTest {
     }
 
     @Test
-    public void shouldReturnUnoccupiedCornerPosition() throws Exception {
-        Board board = new BoardBuilder()
-                .withMove(Position.BOTTOM_LEFT, Mark.X)
-                .withMove(Position.BOTTOM_RIGHT, Mark.X)
-                .withMove(Position.TOP_LEFT, Mark.X)
-                .build();
-
-        Assert.assertThat(board.findEmptyCorner(), Matchers.is(Position.TOP_RIGHT));
-    }
-
-    @Test
-    public void shouldReturnNullWhenNoCornersAreAvailable() throws Exception {
-        Board board = new BoardBuilder()
-                .withMove(Position.BOTTOM_LEFT, Mark.X)
-                .withMove(Position.BOTTOM_RIGHT, Mark.X)
-                .withMove(Position.TOP_LEFT, Mark.X)
-                .withMove(Position.TOP_RIGHT, Mark.X)
-                .build();
-
-        Assert.assertThat(board.findEmptyCorner(), Matchers.nullValue());
-    }
-
-    @Test
-    public void shouldReturnUnoccupiedSidePosition() throws Exception {
-        Board board = new BoardBuilder()
-                .withMove(Position.TOP_CENTRE, Mark.X)
-                .withMove(Position.BOTTOM_CENTRE, Mark.X)
-                .withMove(Position.MIDDLE_LEFT, Mark.X)
-                .build();
-
-
-        Assert.assertThat(board.findEmptySide(), Matchers.is(Position.MIDDLE_RIGHT));
-    }
-
-    @Test
-    public void shouldReturnNullWhenNoUnoccupiedSidePosition() throws Exception {
-        Board board = new BoardBuilder()
-                .withMove(Position.TOP_CENTRE, Mark.X)
-                .withMove(Position.BOTTOM_CENTRE, Mark.X)
-                .withMove(Position.MIDDLE_LEFT, Mark.X)
-                .withMove(Position.MIDDLE_RIGHT, Mark.X)
-                .build();
-
-        Assert.assertThat(board.findEmptySide(), Matchers.nullValue());
-    }
-
-    @Test
     public void shouldReturnTrueIfSeedHasWon() throws Exception {
         Board board = new BoardBuilder()
                 .withMove(Position.TOP_LEFT, Mark.X)

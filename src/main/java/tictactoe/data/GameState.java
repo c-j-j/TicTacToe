@@ -2,5 +2,5 @@ package tictactoe.data;
 
 public enum GameState
 {
-    COMPUTER_WINS, COMPUTER_LOSES, DRAW, IN_PROGRESS
+    X_WINS, O_WINS, DRAW, IN_PROGRESS
 }

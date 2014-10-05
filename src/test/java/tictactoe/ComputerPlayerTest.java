@@ -9,25 +9,28 @@ import tictactoe.data.Board;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
-import static org.junit.Assert.*;
-
-public class ComputerPlayerTest {
+public class ComputerPlayerTest
+{
     @Test
-    public void computerShouldGoToCentreFirst() throws Exception {
+    public void shouldGoCentreWhenOpponentIsInCorner() throws Exception
+    {
         ComputerPlayer computerPlayer = new ComputerPlayer(Mark.X);
-
-        Board board = BoardFactory.emptyBoard();
+        Board board = new BoardBuilder().withMove(Position.TOP_LEFT, Mark.O).build();
         computerPlayer.play(board);
 
         Assert.assertThat(board.isPositionOccupied(Position.CENTRE), Matchers.is(true));
     }
 
     @Test
-    public void shouldGoCentreWhenOpponentIsInCorner() throws Exception {
-        ComputerPlayer computerPlayer = new ComputerPlayer(Mark.X);
-        Board board = new BoardBuilder().withMove(Position.TOP_LEFT, Mark.O).build();
-        computerPlayer.play(board);
+    public void computerWillWinWhenItHasTwoInARow() throws Exception
+    {
+        Board board = new BoardBuilder()
+                .withMove(Position.TOP_LEFT, Mark.X)
+                .withMove(Position.TOP_CENTRE, Mark.X)
+                .build();
 
-        Assert.assertThat(board.isPositionOccupied(Position.CENTRE), Matchers.is(true));
+        new ComputerPlayer(Mark.X).play(board);
+
+        Assert.assertThat(board.toString(),board.getMark(Position.TOP_RIGHT), Matchers.is(Mark.X));
     }
 }

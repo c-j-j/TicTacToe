@@ -22,9 +22,8 @@ public class ComputerPlayer implements Player {
     }
 
     @Override
-    public GameProgress play(Board board) {
+    public void play(Board board) {
         updateBoardUsingMinimax(board);
-        return null;
     }
 
     private void updateBoardUsingMinimax(Board board) {
@@ -35,38 +34,19 @@ public class ComputerPlayer implements Player {
         if (board.isGameOver()) {
             return calculateScore(board, depth);
         }
-        depth++;
-
-        List<Position> emptyPositions = board.getEmptyPositions();
 
         Map<Position, Integer> positionScores = new HashMap<>();
 
-        for (Position emptyPosition : emptyPositions) {
+        for (Position emptyPosition : board.getEmptyPositions()) {
             positionScores.put(emptyPosition,
-                    minimax(BoardFactory.addMove(board, emptyPosition, determineMark(thisPlayersTurn)), !thisPlayersTurn, depth));
+                    minimax(BoardFactory.addMove(board, emptyPosition, determineMark(thisPlayersTurn)), !thisPlayersTurn, ++depth));
         }
-
-     //   System.out.println("__________________");
-
-//        if(emptyPositions.size()==8) {
-//            System.out.println(thisPlayersTurn);
-//            for (Position position : positionScores.keySet()) {
-//                System.out.println("Score " + positionScores.get(position));
-//                System.out.println(BoardFactory.addMove(board,position,Mark.X));
-//            }
-//
-//        }
-
 
         if (thisPlayersTurn) {
             board.addMark(mark, getPositionWithMaximumScore(positionScores));
-            int maximumScore = getMaximumScore(positionScores);
-          //  System.out.println("max score: " + maximumScore);
-            return maximumScore;
+            return getMaximumScore(positionScores);
         } else {
-            int minimumScore = getMinimumScore(positionScores);
-          //  System.out.println("min score: " + minimumScore);
-            return minimumScore;
+            return getMinimumScore(positionScores);
         }
     }
 
@@ -79,8 +59,6 @@ public class ComputerPlayer implements Player {
     }
 
     private Position getPositionWithMaximumScore(Map<Position, Integer> positionScores) {
-
-
         for (Position position : positionScores.keySet()) {
             if (positionScores.get(position) == getMaximumScore(positionScores)) {
                 return position;

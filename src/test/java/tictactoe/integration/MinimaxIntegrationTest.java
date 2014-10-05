@@ -6,22 +6,76 @@ import org.junit.Ignore;
 import org.junit.Test;
 import tictactoe.ComputerPlayer;
 import tictactoe.Game;
-import tictactoe.Token;
+import tictactoe.builders.BoardBuilder;
 import tictactoe.builders.BoardFactory;
-import tictactoe.data.GameProgress;
-import tictactoe.data.GameState;
-import tictactoe.data.Mark;
+import tictactoe.data.*;
 
-@Ignore
-public class MinimaxIntegrationTest {
-
-    public static final int NUMBER_OF_GAMES = 10;
+public class MinimaxIntegrationTest
+{
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenBoardIsInitiallyEmpty()
+    {
+        assertGameEndsInDraw(BoardFactory.emptyBoard());
+    }
 
     @Test
-    public void computerVsComputerShouldResultInDrawAlways() {
-        for (int i = 0; i < NUMBER_OF_GAMES; i++) {
-            GameState gameState = new Game(new ComputerPlayer(Mark.O), new ComputerPlayer(Mark.X)).play(BoardFactory.emptyBoard());
-            Assert.assertThat(gameState, Matchers.is(GameState.DRAW));
-        }
+    public void computerVsComputerShouldResultInDrawWhenTopLeftIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.TOP_LEFT, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenTopCentreIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.TOP_CENTRE, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenTopRightIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.TOP_RIGHT, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenMiddleLeftIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.MIDDLE_LEFT, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenCentreIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.CENTRE, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenMiddleRightIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.MIDDLE_RIGHT, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenBottomLeftIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.BOTTOM_LEFT, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenBottomCentreIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.BOTTOM_CENTRE, Mark.X).build());
+    }
+
+    @Test
+    public void computerVsComputerShouldResultInDrawWhenBottomRightIsFirstMarked()
+    {
+        assertGameEndsInDraw(new BoardBuilder().withMove(Position.BOTTOM_RIGHT, Mark.X).build());
+    }
+
+
+    private void assertGameEndsInDraw(Board board)
+    {
+        GameState gameState = new Game(new ComputerPlayer(Mark.O), new ComputerPlayer(Mark.X)).play(board);
+        Assert.assertThat(gameState, Matchers.is(GameState.DRAW));
     }
 }

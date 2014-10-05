@@ -1,7 +1,6 @@
 package tictactoe.data;
 
 import com.google.gson.Gson;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,81 +24,8 @@ public class Board {
         return !moves.get(position).equals(Mark.EMPTY);
     }
 
-    public Position findEmptyCorner() {
-        for (Position corner : BoardPositions.CORNERS) {
-            if (moves.get(corner) == Mark.EMPTY) {
-                return corner;
-            }
-        }
-        return null;
-    }
-
-    public Position findEmptySide() {
-        for (Position side : BoardPositions.SIDES) {
-            if (moves.get(side) == Mark.EMPTY) {
-                return side;
-            }
-        }
-        return null;
-    }
-
-    public NextMoveResult canSeedWin(Mark mark) {
-        List<Position> winningPositions = new ArrayList<>();
-
-        for (WinningLine winningLine : getPotentialWinningLinesForAllPositions(getPositionsForSeed(mark))) {
-            if (countSeedOnWinningLine(winningLine, mark) == BoardPositions.POTENTIAL_WIN) {
-                Optional<Position> emptyPosition = doesEmptyPositionExistOnLine(winningLine);
-
-                if (emptyPosition.isPresent()) {
-                    winningPositions.add(emptyPosition.get());
-                }
-            }
-        }
-
-        return calculateResultFromWinningPositions(winningPositions);
-    }
-
-    private NextMoveResult calculateResultFromWinningPositions(List<Position> winningPositions) {
-        if (winningPositions.size() > 0) {
-            return new NextMoveResult(winningPositions);
-        } else {
-            return NextMoveResult.indeterminateResult();
-        }
-    }
-
-    private int countSeedOnWinningLine(WinningLine winningLine, Mark mark) {
-        int count = 0;
-
-        for (Position position : winningLine.getPositions()) {
-            if (moves.get(position) == mark) {
-                count++;
-            }
-        }
-        return count;
-    }
-
-    private Optional<Position> doesEmptyPositionExistOnLine(WinningLine winningLine) {
-        return winningLine.getPositions()
-                .stream()
-                .filter(
-                        position -> moves.get(position) == Mark.EMPTY).findFirst();
-    }
-
     public List<Position> getEmptyPositions() {
         return moves.keySet().stream().filter(p -> moves.get(p) == Mark.EMPTY).collect(Collectors.toList());
-    }
-
-    private Set<WinningLine> getPotentialWinningLinesForAllPositions(List<Position> positions) {
-
-        Set<WinningLine> winningLines = new HashSet<>();
-
-        for (Position position : positions) {
-            winningLines.addAll(BoardPositions.WINNING_LINES
-                    .stream()
-                    .filter(winningLine -> winningLine.contains(position))
-                    .collect(Collectors.toSet()));
-        }
-        return winningLines;
     }
 
     public List<Position> getPositionsForSeed(Mark mark) {
@@ -113,7 +39,7 @@ public class Board {
         return Collections.unmodifiableMap(moves);
     }
 
-    public Mark getSeed(Position position) {
+    public Mark getMark(Position position) {
         return moves.get(position);
     }
 
@@ -137,14 +63,6 @@ public class Board {
             }
         }
         return true;
-    }
-
-    public String toJson() {
-        return new Gson().toJson(this);
-    }
-
-    public static Board inflateFromJson(String json) {
-        return new Gson().fromJson(json, Board.class);
     }
 
     @Override
@@ -172,10 +90,13 @@ public class Board {
 
     public GameState result() {
         if (hasSeedWon(Mark.X)) {
-            return GameState.COMPUTER_LOSES;
+            System.out.printf("%s has won\n", Mark.X.name());
+            return GameState.X_WINS;
         } else if (hasSeedWon(Mark.O)) {
-            return GameState.COMPUTER_WINS;
+            System.out.printf("%s has won\n", Mark.O.name());
+            return GameState.O_WINS;
         } else {
+            System.out.println("Draw");
             return GameState.DRAW;
         }
     }

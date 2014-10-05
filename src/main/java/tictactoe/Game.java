@@ -21,6 +21,7 @@ public class Game
         {
             throw new IllegalArgumentException("Board provided is already in a final state.");
         }
+        writeBoardToScreen(board);
 
         while (!board.isGameOver())
         {
@@ -30,7 +31,7 @@ public class Game
                 break;
             }
 
-            System.out.println(board);
+            writeBoardToScreen(board);
 
             playerB.play(board);
             if (board.isGameOver())
@@ -38,9 +39,11 @@ public class Game
                 break;
             }
 
-            System.out.println(board);
+            writeBoardToScreen(board);
         }
-
+        writeBoardToScreen(board);
         return board.result();
     }
+
+    private void writeBoardToScreen(Board board) {System.out.println(board);}
 }
