@@ -3,7 +3,6 @@ package tictactoe.data;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import tictactoe.data.Position;
 
 public class PositionNumberingTest
 {

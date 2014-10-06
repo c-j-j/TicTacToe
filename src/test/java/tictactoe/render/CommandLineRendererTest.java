@@ -6,14 +6,13 @@ import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
-import tictactoe.render.CommandLineRenderer;
 
 import java.io.ByteArrayInputStream;
 
 public class CommandLineRendererTest
 {
     @Test
-    public void getInputFromUser()
+    public void getIntegerInputFromUserAndConvertToPositionObject()
     {
         Integer simulatedInput = 0;
         ByteArrayInputStream in = new ByteArrayInputStream(simulatedInput.toString().getBytes());

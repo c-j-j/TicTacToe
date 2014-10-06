@@ -3,13 +3,15 @@ package tictactoe.integration;
 import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
-import tictactoe.players.ComputerPlayer;
 import tictactoe.Game;
 import tictactoe.builders.BoardBuilder;
 import tictactoe.builders.BoardFactory;
-import tictactoe.data.*;
-import tictactoe.render.DummyGameRenderer;
-import tictactoe.render.GameRenderer;
+import tictactoe.data.Board;
+import tictactoe.data.GameOutcome;
+import tictactoe.data.Mark;
+import tictactoe.data.Position;
+import tictactoe.players.ComputerPlayer;
+import tictactoe.render.NoOutputRenderer;
 
 public class MinimaxIntegrationTest
 {
@@ -76,7 +78,7 @@ public class MinimaxIntegrationTest
 
     private void assertGameEndsInDraw(Board board)
     {
-        GameOutcome gameOutcome = new Game(new DummyGameRenderer()).play(board, new ComputerPlayer(Mark.O), new ComputerPlayer(Mark.X));
+        GameOutcome gameOutcome = new Game(new NoOutputRenderer()).play(board, new ComputerPlayer(Mark.O), new ComputerPlayer(Mark.X));
         Assert.assertThat(gameOutcome, Matchers.is(GameOutcome.DRAW));
     }
 }

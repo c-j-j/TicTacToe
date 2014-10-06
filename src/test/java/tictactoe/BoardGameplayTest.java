@@ -50,7 +50,7 @@ public class BoardGameplayTest
     }
 
     @Test
-    public void onlyGetMoveFromPlayerAIfPlayerAWinsGame()
+    public void onlyPlayerAShouldMakeAMoveIfPlayerAWinsGame()
     {
         Board board = new BoardBuilder()
                 .withMove(Position.BOTTOM_CENTRE, Mark.O)
@@ -64,7 +64,7 @@ public class BoardGameplayTest
     }
 
     @Test
-    public void getMovesFromBothPlayersWhenFirstPlayerDoesNotWinGame()
+    public void bothPlayersShouldMakeAMoveWhenPlayerADoesNotWinGame()
     {
         Board board = new BoardBuilder()
                 .withMove(Position.BOTTOM_CENTRE, Mark.O)

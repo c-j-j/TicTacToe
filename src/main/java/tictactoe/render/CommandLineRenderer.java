@@ -6,7 +6,6 @@ import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Scanner;
 
 public class CommandLineRenderer implements GameRenderer

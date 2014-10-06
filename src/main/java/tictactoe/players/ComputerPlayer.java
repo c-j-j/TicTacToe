@@ -2,8 +2,8 @@ package tictactoe.players;
 
 import tictactoe.builders.BoardFactory;
 import tictactoe.data.Board;
-import tictactoe.data.Position;
 import tictactoe.data.Mark;
+import tictactoe.data.Position;
 
 import java.util.HashMap;
 import java.util.Map;

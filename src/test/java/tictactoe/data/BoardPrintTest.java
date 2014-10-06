@@ -4,9 +4,6 @@ import org.hamcrest.Matchers;
 import org.junit.Assert;
 import org.junit.Test;
 import tictactoe.builders.BoardBuilder;
-import tictactoe.builders.BoardFactory;
-
-import static org.junit.Assert.*;
 
 public class BoardPrintTest
 {

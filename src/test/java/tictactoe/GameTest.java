@@ -39,12 +39,12 @@ public class GameTest
     @Test
     public void shouldDelegateGamePlayToBoardObject()
     {
-        GameOutcome gameOutcome = GameOutcome.DRAW;
-        expectCallToBoard(gameOutcome);
-        expectCallToRenderer(gameOutcome);
+        GameOutcome simulatedGameOutcome = GameOutcome.DRAW;
+        expectCallToBoard(simulatedGameOutcome);
+        expectCallToRenderer(simulatedGameOutcome);
         GameOutcome returnedGameOutcome = new Game(gameRenderer).play(board, playerA, playerB);
 
-        Assert.assertThat(returnedGameOutcome, Matchers.is(gameOutcome));
+        Assert.assertThat(returnedGameOutcome, Matchers.is(simulatedGameOutcome));
     }
 
     private void expectCallToRenderer(GameOutcome gameOutcome)

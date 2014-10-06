@@ -7,7 +7,6 @@ import tictactoe.builders.BoardBuilder;
 import tictactoe.data.Board;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
-import tictactoe.players.ComputerPlayer;
 
 public class ComputerPlayerTest
 {

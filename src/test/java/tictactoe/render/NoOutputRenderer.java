@@ -5,7 +5,7 @@ import tictactoe.data.GameOutcome;
 import tictactoe.data.Mark;
 import tictactoe.data.Position;
 
-public class DummyGameRenderer implements GameRenderer
+public class NoOutputRenderer implements GameRenderer
 {
     @Override
     public void draw(Board board)
